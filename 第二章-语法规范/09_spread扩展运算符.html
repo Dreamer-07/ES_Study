@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ES6 - spread扩展运算符</title>
+</head>
+<body>
+    <script>
+        // ...  扩展运算符能将 [数组] 转换为逗号,分隔 [参数序列]
+        //1. 声明一个数组
+        let arr = ['BYQ','BYQ','BYQ'];
+        //2. 定义一个函数
+        function chunwan(){
+            console.log(arguments);
+        }
+        //3. 调用函数,使用 ... 将数组转换为 [参数序列]
+        chunwan(...arr);
+        // chunwan(arr);
+    </script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ES6 </title>
+</head>
+<body>
+    <script>
+        /* 解构赋值： ES6 允许 按照一定模式 从数组和对象中提取值，对变量进行赋值  */
+        //1. 数组的解构
+        const F4 = ['BYQ','巴御前'];
+        let [a,b] = F4;
+        console.log(a); //BYQ
+        console.log(b); //巴御前
+        
+        //2. 对象的解构
+        const C = {
+            name: "BAYUQIAN",
+            age: "16",
+            study: function(){
+                console.log("study()...");
+            }
+        }
+
+        let{name,age} = C;
+        console.log(name);
+        console.log(age);
+        let{study} = C;
+        study();
+
+        //3. 使用数组解构交换数组内的元素
+        var [D,E] = [1,2];
+        [E,D] = [D,E];
+        console.log(D);
+        console.log(E);
+    </script>
+</body>
+</html>

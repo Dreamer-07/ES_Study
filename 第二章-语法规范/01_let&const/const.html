@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>const 定义常量</title>
+</head>
+<body>
+    <script>
+        /*  const 的特性  */
+        //1. 声明变量 & 一定要赋初始值
+        const a = "A";
+
+        //2. 规范：常量名都使用大写
+        const BYQ = "巴御前";
+
+        //3. 常量的值不能修改
+        // BYQ = "ABC";
+
+        //4. 块级作用域：
+        {
+            const B = "b";
+        }
+        // console.log(B); //not defind
+
+        //5. 对于数组和对象元素的修改，不能算作对常量的修改，不会报错
+        const TEAM = ["A","B","C","D"];
+        TEAM[0] = "C";
+        // TEAM = "o"; //报错，对象同理
+    </script>
+</body>
+</html>

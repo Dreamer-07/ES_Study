@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ES6 - 箭头函数实践</title>
+    <style>
+        #ad{
+            width: 200px;
+            height: 200px;
+            background: blue;
+        }
+    </style>
+</head>
+<body>
+    <div id="ad"></div>
+    <script>
+        /* 需求1：点击 div 后 2s 颜色变换成粉色 */
+        let ad = document.querySelector("#ad");
+        ad.addEventListener('click',function(){
+            setTimeout(
+            //使用原生函数定义，参考运行时调用的环境 this = window
+            // function(){
+            //     this.style.background = "pink"; 
+            // }
+            //使用箭头函数定义时 this 为静态的
+            () => {
+                this.style.background = "pink";
+            }
+            ,2000)
+        })
+
+        /* 需求2：返回数组中的偶数元素 */
+        const ARR = [1,2,5,9,100,80];
+        const result = ARR.filter(item => item % 2 === 0);
+        console.log(result);
+
+        /* 
+        总结：
+            1. 箭头函数适合于 this 无关的函数，如：定时器，数组的方法回调
+            2. 箭头函数不适合于 this 有关的函数，如：DOM 事件回调，对象的方法定义
+        */
+    </script>
+</body>
+</html>

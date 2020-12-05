@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ES6 - 简化对象的写法</title>
+</head>
+<body>
+    <script>
+        /* ES6 允许在大括号{}内，直接写入变量和函数，作为对象的属性和方法 */
+        let name = "巴御前";
+        let change = function(){
+            console.log('真言·圣观世音菩萨');
+        }
+        var servant = {
+            name,
+            change,
+            //在{}内部定义函数时，可以忽略 function 关键字
+            OHHH(){
+                console.log('A');
+            },
+        }
+        console.log(servant);
+    </script>
+</body>
+</html>

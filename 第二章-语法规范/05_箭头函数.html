@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ES6 - 箭头函数</title>
+</head>
+<body>
+    <script>
+        /* ES6 院校使用[箭头] (=>) 定义函数 */
+        //语法: 变量名 = ([形参1...]) => {函数体};
+        let add = (a,b) => {
+            return a + b;
+        }
+        console.log(add(1,2)); //3
+
+        //特性1：this 是静态的，this 始终指向函数声明时所在作用域下的 this 的值
+        function getName(){
+            console.log(this.name);
+        };
+        let getName2 = () => {
+            console.log(this.name);
+        };
+
+        window.name = "BYQ";
+        var obj = {
+            name: "OKK"
+        };
+        //直接调用
+        getName(); //BYQ
+        getName2(); //BYQ
+        //通过 call 修改 this 对象进行调用
+        getName.call(obj); //OKK
+        getName2.call(obj); //BYQ
+
+        //特性2：不能作为构造函数
+        let Person = (name,age) => {
+            this.name = name,
+            this.age = age
+        }
+        // let me = new Person("BYQ",16); //Person is not a constructo
+        // console.log(me);
+
+        //特性3：没有 arguments 变量
+        let fn = () => {
+            // console.log(arguments); //no defind
+        };
+        fn(1,2);
+
+        //特性4：箭头函数的缩写
+            //4.1 省略小括号，当形参有且只有一个时
+            let add2 = n => {
+                return n + n;
+            }
+            console.log(add2(2));
+
+            //4.2 省略花括号，当语句有且只有一条时，同时忽略 return 语句，该语句的执行结果就是函数的返回值
+            let pow = n => n * n;
+            console.log(pow(6));
+    </script>
+</body>
+</html>

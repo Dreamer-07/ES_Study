@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ES6 - spread扩展运算符的应用</title>
+</head>
+<body>
+    <div></div>
+    <div></div>
+    <div></div>
+    <script>
+        //1. 数组的合并
+        let arrA = ['A','B'];
+        let arrB = ['C','D'];
+        //1.1 ES5 的写法
+        let arrC = arrA.concat(arrB);
+        console.log(arrC);
+        //1.2 ES6 的写法
+        let arrD = [...arrA,...arrB];
+        console.log(arrD);
+
+        //2. 数组的克隆
+        let BYQ = ['B','Y','Q'];
+        let ABC = [...BYQ]; //浅拷贝
+        console.log(ABC);
+
+        //3. 将伪数组转换为多个数组
+        var divs = document.querySelectorAll("div");
+        console.log(divs);
+        var divArrs = [...divs];
+        console.log(divArrs);
+    </script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>let</title>
+</head>
+<body>
+    <!--  let 特点  -->
+    <script>
+    //1. 可以声明变量(和 var 一样)
+    let a = 3;
+    let b;
+
+    //2. 不能声明重名的变量
+    // let byq = "巴御前";
+    // let byq = "巴御前";
+
+    //3. 块级作用域 - 包括 if 、else 、while 、for 等{}内声明的 let
+    {
+        // let byq = "巴御前"; //不可以访问
+        var byq = "巴御前"; //可以访问
+    }
+    console.log(byq);
+
+    //4. 不存在变量提升
+    console.log(c);
+    // let c = 3; //不可以访问
+    var c = 3; // undefined
+
+    //5. 不影响作用域链
+    {
+        let d = "Abc";
+        function fn(){ 
+            //访问外一层作用域的变量
+            console.log(d);
+        }
+        fn();
+    }
+    </script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ES6 - rest 参数</title>
+</head>
+<body>
+    <script>
+        // ES6 中引入 rest 参数，用于获取函数的实参，用来代替 arguments
+        // ES5 获取实参的方式
+        function data(){
+            console.log(arguments);
+        }
+        data(1,2,6,8,10);
+
+        // rest 参数; 注意：rest 参数只能放在函数参数的最后一个
+        function args(a,b,...args){
+            console.log(a);
+            console.log(b);
+            console.log(args); //对于 rest 参数，仍可以用 filter some erery map 等
+        }
+        args("BYQ","BYQ","BYQ","BYQ","BYQ");
+
+    </script>
+</body>
+</html>

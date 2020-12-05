@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ES6 模板字符串</title>
+</head>
+<body>
+    <script>
+        /* ES6 中引入新的声明字符串的方式 `` */
+        //1. 声明
+        let str = `BAYUQIAN`;
+        console.log(typeof str); //String
+
+        //2. 特性1：内容中可以直接出现换行符
+        let str2 = `<ul>
+                     <li></li>
+                     <li></li>
+                     <li></li>
+                    </ul>`;
+        console.log(str2);
+
+        //3. 特性2：变量拼接,使用 `` 的字符串中可以使用 ${} 直接拼接变量
+        let lovest = '巴御前';
+        let out = `${lovest}天下第一`;
+        console.log(out);
+    </script>
+</body>
+</html>
