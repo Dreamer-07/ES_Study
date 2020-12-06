@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ES6 - 迭代器</title>
+</head>
+<body>
+    <script>
+        //声明一个数组 Array
+        let byq = ['b','y','q'];
+
+        /* 
+        使用 for...of 循环遍历 - 遍历 value
+        使用 for...in 循环遍历 - 遍历 key
+        */
+        for(let v of byq){
+            console.log(v);
+        }
+        for(let k in byq){
+            console.log(k);
+        }
+
+        //工作原理
+        //1. 创建(获取)一个指针对象，默认指向对应数据结构的起始位置
+        let iterator = byq[Symbol.iterator](); //Array 原型对象中的 Symbol.iterator 属性为方法，执行它即可得到对应的指针对象
+        //2. 第一次调用对象(指针对象)的 next()，指针自动指向数据结构的第一个成员
+        console.log(iterator.next()); //{value: "b", done: false}
+        console.log(iterator.next()); //{value: "y", done: false}
+        console.log(iterator.next()); //{value: "q", done: false}
+        //3. 不断调用对象的 next() 方法，指针一直向后移动，直到最后一个成员
+        console.log(iterator.next()); //{value: undefined, done: true}
+        /* 
+        每调用一个 next() 都会返回一个包含 value 和 done 值的对象
+
+        value：遍历到的数据
+
+        done：遍历是否完成，遍历完成就为 true，否则为 false
+        */
+    </script>
+</body>
+</html>

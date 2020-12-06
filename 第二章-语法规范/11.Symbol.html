@@ -9,7 +9,27 @@
     <script>
         //ES6 新数据类型 Symbol
         //创建方式1，使用 Symbol() 函数
-        let s = Symbol('BYQ'); //可以传入一个值，作为注释
+        let s = Symbol('BYQ'); //可以传入一个值，作为描述字符串(注释)
+        console.log(s,typeof s); //Symbol(BYQ) "symbol"
+        let s2 = Symbol('BYQ'); 
+        console.log(s === s2); //false - 通过方式1创建的 Symbol 数据，即使描述字符串相同，其值也不同
+
+        //创建方式2：通过 Symbol.for() 函数创建 - 补充：Symbol 是一个函数对象
+        let s3 = Symbol.for('BYQ');
+        console.log(s3,typeof s3); //Symbol(BYQ) "symbol"
+        let s4 = Symbol.for('BYQ');
+        console.log(s3 === s4); //true - 通过方式2创建的 Symbol 数据，描述字符串相同时，结果为 true
+
+        //不能与其他数据类型进行运算(包括 Symbol)
+
+        /* 总结：JS 的七种数据类型
+        USONB - you are so niubility
+        u: undefined
+        s: string symbol
+        o: object
+        n: null number
+        b: boolean
+         */
     </script>
 </body>
 </html>

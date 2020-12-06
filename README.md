@@ -413,29 +413,240 @@ console.log(divArrs);
 
 ### 2.9 Symbol
 
-ES6 引入了一种**新的数据类型 Symbol**，表示第一无二的值，作为 JavaScript 语言的第七种数据类型，一种类似于字符串的数据类型
+#### 2.9.1 基本使用
+
+ES6 引入了一种**新的数据类型 Symbol**，表示独一无二的值，作为 JavaScript 语言的第七种数据类型，一种类似于字符串的数据类型
 
 特点
 
 1. Symbol 的值是唯一的，用来解决命名冲突的问题
-2. Symbol 的值不能与其他数据进行运算
+2. Symbol 的值不能与**其他数据(包括 Symbol)进行运算**
 3. Symbol 定义的对象属性不能使用 for..in 循环遍历，但是可以用 `Reflect,ownKeys` 来获取所有对象的键名
 
-```javascript
+创建 Symbol 类型的数据
 
+```javascript
+//创建方式1，使用 Symbol() 函数
+let s = Symbol('BYQ'); //可以传入一个值，作为描述字符串(注释)
+console.log(s,typeof s); //Symbol(BYQ) "symbol"
+let s2 = Symbol('BYQ'); 
+console.log(s === s2); //false - 通过方式1创建的 Symbol 数据，即使描述字符串相同，其值也不同
+
+//创建方式2：通过 Symbol.for() 函数创建 - 补充：Symbol 是一个函数对象
+let s3 = Symbol.for('BYQ');
+console.log(s3,typeof s3); //Symbol(BYQ) "symbol"
+let s4 = Symbol.for('BYQ');
+console.log(s3 === s4); //true - 通过方式2创建的 Symbol 数据，描述字符串相同时，结果为 true
 ```
 
+JS 七种数据类型总结：**USONB：you are so niubility**
 
+- u: undefined
+- s: string symbol
+- o: object
+- n: null number
+- b: boolean
 
+#### 2.9.2 创建对象的属性
 
+**扩展原对象中的属性/方法**
 
+```javascript
+let game = {
+    name: "Fate Grand Order",
+    age: 16,
+    up: function(){
+        console.log('game.up()....');
+    },
+    down: function(){
+        console.log('game.down()...');
+    }
+}
+//声明一个额外的对象
+let methods = {
+    up: Symbol(),
+    down: Symbol()
+}
 
+//使用 [Symbol数据] 扩展 属性/方法
+game[methods.up] = function(){
+    console.log('methods.up()...');
+}
+game[methods.down] = function(){
+    console.log('methods.down()...');
+}
+game[Symbol('byq')] = 'BYQ';
+console.log(game);
+```
 
+**在对象声明时定义 Symbol 类型的数据**
 
+```javascript
+let byq = {
+    name: '巴御前',
+    //对于 Symbol() 表达式，不能直接作为方法名，使用[]包装一下即可
+    [Symbol('say')]: function(){
+        console.log('巴妈！巴妈！巴妈！');
+    },
+    [Symbol('study')]: () => {
+        console.log("学习！学习！学习！");                
+    },
+    [Symbol('byq')]: 'BYQ'
+}
+console.log(byq);
+```
 
+#### 2.9.3 Symbol内置值
 
+> 对象可以通过调用对应的方法触发对应的 Symbol 内置值
+>
+> 也可以用 [Symbol内置值] 设置对应的属性
 
+分类
 
+| 规范名称             | Description                 | 值及其作用                                                   |
+| -------------------- | --------------------------- | ------------------------------------------------------------ |
+| @@asyncIterator      | "Symbol.asyncIterator"      | 一个返回异步迭代器的方法，主要用于for await                  |
+| @@hasInstance        | "Symbol.hasInstance"        | 用于确认对象是否为该构造函数实例的方法，主要用于instanceof   |
+| @@isConcatSpreadable | "Symbol.isConcatSpreadable" | 一个Boolean值，标识是否可以通过Array.prototype.concat进行扁平化处理 |
+| @@iterator           | "Symbol.iterator"           | 一个返回异步迭代器的方法，主要用于for of                     |
+| @@match              | "Symbol.match"              | 用于String.prototype.match调用                               |
+| @@replace            | "Symbol.replace"            | 用于String.prototype.replace调用                             |
+| @@search             | "Symbol.search"             | 用于String.prototype.search调用                              |
+| @@species            | "Symbol.species"            | 一个用来返回创建派生对象的构造函数的方法                     |
+| @@split              | "Symbol.split"              | 用于String.prototype.split调用                               |
+| @@toPrimitive        | "Symbol.toPrimitive"        | 用于ToPrimitive抽象方法                                      |
+| @@toStringTag        | "Symbol.toStringTag"        | 用于描述一个对象的字符串，主要用于Object.prototype.toString调用 |
+| @@unscopables        | "Symbol.unscopables"        | 用于with环境绑定中排除的属性名称                             |
+
+```javascript
+//1. Symbol.hasInstance：当进行 instanceof 判断会调用该方法
+//定义一个'类' class(ES6中的新语法)
+class Person{
+    static [Symbol.hasInstance](param){
+        console.log(param);
+        console.log('巴御前');
+        return false;
+    }
+}
+let o = {};
+
+console.log(o instanceof Person);
+
+//2. Symbol.isConcatSpreadable：当对象使用 Array.prototype.concat() 时，是否展开
+let arr1 = ['b','y','q'];
+let arr2 = ['B','Y','Q'];
+console.log(arr1.concat(arr2)); // ["b", "y", "q", "B", "Y", "Q"]
+arr2[Symbol.isConcatSpreadable] = false; //不展开
+console.log(arr1.concat(arr2)); // ["b", "y", "q", Array(3)]
+```
+
+### 2.10 迭代器
+
+> 接口：对象具有对应的属性，这里指的是 Symbol.iterator 内置值
+
+迭代器( iterator )是一种接口，为各种不同的数据结构提供统一的访问机制，任何数据结构只要部署 iterator 接口，就可以完成遍历操作。
+
+ES6 创造了一种新的遍历命令 for...of 循环，iterator 接口主要供 for...of 消费
+
+原生具备 iterator 接口的数据(可用 for of 遍历)
+
+- Array
+- Arguments
+- Set
+- Map
+- String
+- TypedArray
+- NodeList
+
+```javascript
+//声明一个数组 Array
+let byq = ['b','y','q'];
+
+/* 
+使用 for...of 循环遍历 - 遍历 value
+使用 for...in 循环遍历 - 遍历 key
+*/
+for(let v of byq){
+    console.log(v);
+}
+for(let k in byq){
+    console.log(k);
+}
+```
+
+**工作原理**
+
+1. 创建一个**指针对象**，指向当前数据结构的起始位置
+
+2. 第一次调用对象(指针对象)的 next()，指针自动指向数据结构的第一个成员
+
+3. 不断调用对象的 next() 方法，指针一直向后移动，直到最后一个成员
+
+4. 每调用一个 next() 都会返回一个包含 value 和 done 值的对象
+
+   value：遍历到的数据
+
+   done：遍历是否完成，遍历完成就为 true，否则为 false
+   
+   **最后通过 for...of 循环遍历得到的 value 就是 next() 函数返回对象的 value 属性值**
+
+```javascript
+//1. 创建(获取)一个指针对象，默认指向对应数据结构的起始位置
+let iterator = byq[Symbol.iterator](); //Array 原型对象中的 Symbol.iterator 属性为方法，执行它即可得到对应的指针对象
+//2. 第一次调用对象(指针对象)的 next()，指针自动指向数据结构的第一个成员
+console.log(iterator.next()); //{value: "b", done: false}
+console.log(iterator.next()); //{value: "y", done: false}
+console.log(iterator.next()); //{value: "q", done: false}
+//3. 不断调用对象的 next() 方法，指针一直向后移动，直到最后一个成员
+console.log(iterator.next()); //{value: undefined, done: true}
+/* 
+每调用一个 next() 都会返回一个包含 value 和 done 值的对象
+
+value：遍历到的数据
+
+done：遍历是否完成，遍历完成就为 true，否则为 false
+*/
+```
+
+#### 2.10.1 自定义迭代器
+
+```javascript
+//声明一个对象
+const servant = {
+    name:'巴御前',
+    info:[
+        '巴妈！',
+        '巴妈！！',
+        '巴妈好可爱啊~'
+    ],
+    //定义一个 Symbol.iterator 属性用户实现 iterator 接口
+    [Symbol.iterator](){
+        let index = 0;
+        //需要返回一个指针对象
+        return {
+            //指针对象中需要定义 next() 方法
+            next:() => {
+                //每调用一个 next() 都会返回一个包含 value 和 done 值的对象
+                if(index < this.info.length){
+                    let result = {value:this.info[index],done:false};
+                    index++;
+                    return result;
+                }else{
+                    return {value:undefined,done:true}
+                }
+            }
+        }
+    }
+};
+
+//使用 for...of 遍历这个对象中的 info 属性
+for(let v of servant){
+    console.log(v);
+}
+```
+
+![image-20201206230903987](README.assets/image-20201206230903987.png)
 
 
 

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ES6 - Symbol()内置值</title>
+</head>
+<body>
+    <script>
+        //1. Symbol.hasInstance：当进行 instanceof 判断会调用该方法
+        //定义一个'类' class(ES6中的新语法)
+        class Person{
+            static [Symbol.hasInstance](param){
+                console.log(param);
+                console.log('巴御前');
+                return false;
+            }
+        }
+        let o = {};
+
+        console.log(o instanceof Person);
+
+        //2. Symbol.isConcatSpreadable：当对象使用 Array.prototype.concat() 时，是否展开
+        let arr1 = ['b','y','q'];
+        let arr2 = ['B','Y','Q'];
+        console.log(arr1.concat(arr2)); // ["b", "y", "q", "B", "Y", "Q"]
+        arr2[Symbol.isConcatSpreadable] = false; //不展开
+        console.log(arr1.concat(arr2)); // ["b", "y", "q", Array(3)]
+
+        //3...
+    </script>
+</body>
+</html>

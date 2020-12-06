@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ES6 - 自定义遍历数据</title>
+</head>
+<body>
+    <script>
+        //声明一个对象
+        const servant = {
+            name:'巴御前',
+            info:[
+                '巴妈！',
+                '巴妈！！',
+                '巴妈好可爱啊~'
+            ],
+            //定义一个 Symbol.iterator 属性用户实现 iterator 接口
+            [Symbol.iterator](){
+                let index = 0;
+                //需要返回一个指针对象
+                return {
+                    //指针对象中需要定义 next() 方法
+                    next:() => {
+                        //每调用一个 next() 都会返回一个包含 value 和 done 值的对象
+                        if(index < this.info.length){
+                            let result = {value:this.info[index],done:false};
+                            index++;
+                            return result;
+                        }else{
+                            return {value:undefined,done:true}
+                        }
+                    }
+                }
+            }
+        };
+
+        //使用 for...of 遍历这个对象中的 info 属性
+        for(let v of servant){
+            console.log(v);
+        }
+    </script>
+</body>
+</html>

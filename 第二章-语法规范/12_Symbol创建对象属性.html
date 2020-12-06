@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ES6 - symbol创建对象属性</title>
+</head>
+<body>
+    <script>
+        //Symbol 的使用场景：给对象中添加属性、方法
+        //1.1 扩展对象中的属性/方法
+        let game = {
+            name: "Fate Grand Order",
+            age: 16,
+            up: function(){
+                console.log('game.up()....');
+            },
+            down: function(){
+                console.log('game.down()...');
+            }
+        }
+        //声明一个额外的对象
+        let methods = {
+            up: Symbol(),
+            down: Symbol()
+        }
+
+        //使用 [Symbol数据] 扩展 属性/方法
+        game[methods.up] = function(){
+            console.log('methods.up()...');
+        }
+        game[methods.down] = function(){
+            console.log('methods.down()...');
+        }
+        game[Symbol('byq')] = 'BYQ';
+        console.log(game);
+
+        //1.2 在对象声明时定义 Symbol 类型的数据
+        let byq = {  
+            name: '巴御前',
+            //对于 Symbol() 表达式，不能直接作为方法名，使用[]包装一下即可
+            [Symbol('say')]: function(){
+                console.log('巴妈！巴妈！巴妈！');
+            },
+            [Symbol('study')]: () => {
+                console.log("学习！学习！学习！");                
+            },
+            [Symbol('byq')]: 'BYQ'
+        }
+        console.log(byq);
+    </script>
+</body>
+</html>
