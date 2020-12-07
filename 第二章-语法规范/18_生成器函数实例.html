@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ES6 - 生成器函数实例</title>
+</head>
+<body>
+    <script>
+        // 生成器主要负责解决异步编程：定时器，文件操作，ajax请求，request，数据库操作
+        // 这里以定时器为例
+        // 原写法 - 回调地狱，不方便调试
+        // setTimeout(function(){
+        //     console.log('aaa');
+        //     setTimeout(function(){
+        //         console.log('bbb');
+        //         setTimeout(function(){
+        //             console.log('ccc');
+        //         },3000)
+        //     },2000)
+        // },1000)
+
+        //使用生成器函数优化
+        //将多个异步分解成多个任务
+        function one(){
+            setTimeout(() => {
+                console.log('aaa');
+                iterator.next(); //在第一个异步任务结束后执行第二个异步任务
+            },1000);
+        }
+        function two(){
+            setTimeout(() => {
+                console.log('bbb');
+                iterator.next();
+            },2000);
+        }
+        function three(){
+            setTimeout(() => {
+                console.log('ccc');
+                iterator.next();
+            },3000);
+        }
+
+        //定义生成器函数
+        function * start(){
+            yield one();
+            yield two();
+            yield three();
+        }
+        
+        //得到迭代器都西昂
+        let iterator = start();
+        iterator.next(); //执行第一个 yield 函数体
+    </script>
+</body>
+</html>

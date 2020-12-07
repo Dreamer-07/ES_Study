@@ -16,7 +16,7 @@ ECMAScript 是由 Ecma 国际通过 ECMA-262 标准化的**脚本程序设计语
 
 兼容性：https://www.caniuse.com/?search=ES6
 
-## 第二章 语法规范
+## 第二章 ES6
 
 ### 2.1 let & const
 
@@ -648,9 +648,125 @@ for(let v of servant){
 
 ![image-20201206230903987](README.assets/image-20201206230903987.png)
 
+### 2.11 生成器
 
+> 生成器函数是 ES6 提供的一种 **异步编程解决方案**，语法行为于传统函数完全不同
 
+生成器函数声明 & 调用
 
+```javascript
+/* 
+生成器 === 特殊的函数
+声明语法：function * 函数名(){}
+*/
+function * get(){
+    console.log('byq');
+    //可以定义 yield 语句用于分割函数
+    yield 'aaaa';
+    console.log('byq222');
+    yield 'bbbb';
+    console.log('byq333');
+    yield 'cccc';
+    console.log('byq444');
+}
+
+let iterator = get();
+console.log(iterator); //得到的是一个迭代器对象
+/* 
+可以通过 next() 执行函数体 - 函数调用
+- 以 yield 作为函数分割，每执行一次 next() 执行一次对应的函数体
+*/
+//    iterator.next(); //byq
+//    iterator.next(); //byq222
+//    iterator.next(); //byq333
+//    iterator.next(); //byq444
+
+//也可以通过 for...of 进行遍历
+for(let v of iterator){
+    //遍历时会执行对应的函数体，且将 yield 语句后面的字面量/变量作为遍历值 v
+    console.log(v);
+}
+```
+
+生成器函数参数
+
+```javascript
+//声明生成器函数
+function * get(...args){
+    console.log(args);
+    console.log('-----');
+    let result1 = yield 111;
+    console.log(result1); //可以在函数体中使用 yield 的返回值
+    console.log('-----');
+    let result2 = yield 222;
+    console.log(result1);
+    console.log(result2);
+    console.log('-----');
+    let result3 = yield 333;
+    console.log(result1);
+    console.log(result2);
+    console.log(result3);
+    console.log('-----');
+}
+
+//执行生成器函数获取迭代器对象 - 可以传入参数作为该函数的形参
+let iterator = get('b','y','q');
+//执行第一个函数体
+iterator.next(); //["b", "y", "q"]
+//执行第二个函数体时，也可以传入一个参数，作为上一个(这里也就是第一个) yield 的返回值
+iterator.next('byq222');
+iterator.next('byq333');
+iterator.next('byq444');
+```
+
+![image-20201207110758630](README.assets/image-20201207110758630.png)
+
+生成器函数实例1
+
+```javascript
+// 原写法 - 回调地狱，不方便调试
+// setTimeout(function(){
+//     console.log('aaa');
+//     setTimeout(function(){
+//         console.log('bbb');
+//         setTimeout(function(){
+//             console.log('ccc');
+//         },3000)
+//     },2000)
+// },1000)
+
+//使用生成器函数优化
+//将多个异步分解成多个任务
+function one(){
+    setTimeout(() => {
+        console.log('aaa');
+        iterator.next(); //在第一个异步任务结束后执行第二个异步任务
+    },1000);
+}
+function two(){
+    setTimeout(() => {
+        console.log('bbb');
+        iterator.next();
+    },2000);
+}
+function three(){
+    setTimeout(() => {
+        console.log('ccc');
+        iterator.next();
+    },3000);
+}
+
+//定义生成器函数
+function * start(){
+    yield one();
+    yield two();
+    yield three();
+}
+
+//得到迭代器都西昂
+let iterator = start();
+iterator.next(); //执行第一个 yield 函数体
+```
 
 
 

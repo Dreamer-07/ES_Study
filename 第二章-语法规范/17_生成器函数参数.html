@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ES6 - 生成器函数参数</title>
+</head>
+<body>
+    <script>
+        //声明生成器函数
+        function * get(...args){
+            console.log(args);
+            console.log('-----');
+            let result1 = yield 111;
+            console.log(result1); //可以在函数体中使用 yield 的返回值
+            console.log('-----');
+            let result2 = yield 222;
+            console.log(result1);
+            console.log(result2);
+            console.log('-----');
+            let result3 = yield 333;
+            console.log(result1);
+            console.log(result2);
+            console.log(result3);
+            console.log('-----');
+        }
+
+        //执行生成器函数获取迭代器对象 - 可以传入参数作为该函数的形参
+        let iterator = get('b','y','q');
+        //执行第一个函数体
+        iterator.next(); //["b", "y", "q"]
+        //执行第二个函数体时，也可以传入一个参数，作为上一个(这里也就是第一个) yield 的返回值
+        iterator.next('byq222');
+        iterator.next('byq333');
+        iterator.next('byq444');
+    </script>
+</body>
+</html>

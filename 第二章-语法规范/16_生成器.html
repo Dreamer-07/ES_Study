@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ES6 - 生成器</title>
+</head>
+<body>
+    <script>
+        /* 
+        生成器 === 特殊的函数
+        语法：function * 函数名(){}
+        */
+       function * get(){
+           console.log('byq');
+           //可以定义 yield 语句用于分割函数
+           yield 'aaaa';
+           console.log('byq222');
+           yield 'bbbb';
+           console.log('byq333');
+           yield 'cccc';
+           console.log('byq444');
+       }
+
+       let iterator = get();
+       console.log(iterator); //得到的是一个迭代器对象
+       /* 
+       可以通过 next() 执行函数体
+        - 以 yield 作为函数分割，每执行一次 next() 执行一次对应的函数体
+       */
+    //    iterator.next(); //byq
+    //    iterator.next(); //byq222
+    //    iterator.next(); //byq333
+    //    iterator.next(); //byq444
+
+       //也可以通过 for...of 进行遍历
+       for(let v of iterator){
+           //遍历时会执行对应的函数体，且将 yield 语句后面的 字面量/变量作为遍历值 v
+           console.log(v);
+       }
+    </script>
+</body>
+</html>
