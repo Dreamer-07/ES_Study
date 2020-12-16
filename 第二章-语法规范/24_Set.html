@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ES6 -Set 集合</title>
+</head>
+<body>
+    <script>
+        //创建一个 Set 集合的实例对象
+        let s = new Set(['byq','emt','ohhhh','ohhhh']); //可以传入一个数组作为集合内的初始值
+
+        /* 集合相关的基本属性和方法
+            1. size 返回集合中的元素个数
+            2. add() 添加一个新元素，返回当前集合
+            3. delete() 删除元素，返回 boolean 值
+            4. has() 检测集合中是否包含某个元素，返回 boolean 值
+            5. clear() 清空集合元素       
+        */
+        console.log(s.size); //查看集合内的元素个数
+        s.add('dreamer07'); //添加一个新元素，返回当前集合
+        s.delete('ohhhh'); //删除元素，返回 boolean 值
+        console.log(s.has('byq'));//检测集合中是否包含某个元素，返回 boolean 值
+        s.clear();
+        
+        console.log(s);
+    </script>
+</body>
+</html>

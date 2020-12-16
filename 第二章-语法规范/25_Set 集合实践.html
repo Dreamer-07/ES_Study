@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ES6 - Set集合实践</title>
+</head>
+<body>
+    <script>
+        let arr = [1,2,3,4,4,5,5,6,6];
+        let arr2 = [4,5,5,6,6,7];
+        /* 数组去重 
+            1. 先将其转换为 Set 集合去重
+            2. 在使用 ... 将类数组转换为数组
+         */
+        let result1 = [...new Set(arr)];
+        console.log(result1); //(6) [1, 2, 3, 4, 5, 6]
+        
+        /* 求交集 
+            1. 先将两个数组转换为去重的 Set
+            2. 将一个 Set 转换为数组后，使用  filter() 方法，遍历其中的元素为 item
+            3. 调用另一个 Set 的 has() 方法，判断是否存在对应相同的元素
+        */
+        //复杂版
+        let s1 = [...new Set(arr)];
+        let s2 = new Set(arr2);
+        let result2 = s1.filter((item) => {
+            if(s2.has(item)){
+                return true;
+            }
+            return false;
+        });
+        console.log(result2); //(3) [4, 5, 6]
+        //简化版
+        let result3 = [...new Set(arr)].filter(item => s2.has(item));
+        console.log(result3); //(3) [4, 5, 6]
+
+        /*  求并集 */
+        let result4 = [...new Set([...arr,...arr2])];
+        console.log(result4); //(7) [1, 2, 3, 4, 5, 6, 7]
+
+        /* 求差集 */
+        let result5 = [...new Set(arr)].filter(item => !(s2.has(item))); 
+        console.log(result5); //(3) [1, 2, 3]
+    </script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ES6 - Promise 基本语法</title>
+</head>
+<body>
+    <script>
+        /* 
+        实例化 Promise 对象
+            - 传入一个函数实例，设置两个参数，第一个为 resolve，第二个为 reject (变量名可以自定义，但建议这样写)
+        */
+        const p = new Promise(function(resolve,reject){
+            //设置异步任务
+            setTimeout(function(){
+                //模拟获取数据库数据
+                /* 
+                根据不同的情况调用不同的方法修改 实例对象p 的状态
+                    - 成功时调用 resolve(数据);
+                    - 异常时调用 reject(数据);
+                */
+
+                // let data = '获取数据库数据';
+                // resolve(data);
+                let err = '出现异常啦';
+                reject(err);
+            },1000);
+        });  
+        /* 
+        调用 Promise.prototype.then() 方法区分该异步任务不同状态进行处理 
+        传入两个函数实例作为形参
+            - 第一个为成功时的处理:接收一个参数(resolve()调用时传入的)，变量名建议为 value
+            - 第二个为失败时的处理:接收一个参数(reject()调用时传入的)，变量名建议为 reason
+        */
+        p.then(
+            function(value){
+                console.log(value);
+            },function(reason){
+                console.error(reason);
+            }
+        );
+    </script>
+</body>
+</html>

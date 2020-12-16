@@ -7,7 +7,45 @@
 </head>
 <body>
     <script>
-        //模拟三个异步请求，将多个
+        //模拟三个请求，将三个请求分成三个任务
+        function getUserInfo(id){
+            //模拟请求
+            setTimeout(() => {
+                console.log('--- 获取用户信息');
+                console.log('id编号:' + id);
+                //执行下一个异步任务
+                iterator.next('[用户信息]')
+            },1000);
+        }
+
+        function getOrderInfo(userInfo){
+            setTimeout(() => {
+                console.log('--- 获取用户订单信息');
+                console.log('用户信息:' + userInfo);
+                //执行下一个异步任务
+                iterator.next('[订单编号]')
+            },1000)
+        }
+
+        function getGoodInfo(orderId){
+            setTimeout(() => {
+                console.log('--- 获取商品信息');
+                console.log(orderId);
+            },1000)
+        }
+
+        //使用生成器整合三个任务
+        function * get(id){
+            let userInfo = yield getUserInfo(id);
+            let orderInfo = yield getOrderInfo(userInfo);
+            let goodInfo = yield getGoodInfo(orderInfo);
+        }
+
+        //获取迭代器对象
+        let iterator = get(123);
+        //执行第一个异步任务
+        iterator.next();
+
     </script>
 </body>
 </html>

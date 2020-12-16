@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ES6 - Promise - 发送 Ajax 请求</title>
+</head>
+<body>
+    <script>
+        // 接口地址 - http://localhost:8081/getAjax
+        
+        //使用 Promise 封装对应的 Ajax 请求
+        const p = new Promise((resolve,reject) => {
+            //使用原生 JS
+            //1. 创建对象
+            const xhr = new XMLHttpRequest();
+            //2. 初始化
+            xhr.open('GET','http://localhost:8081/getAjax');
+            //3. 发送请求
+            xhr.send();
+            //4. 处理响应数据
+            xhr.onreadystatechange = function(){
+                //判断状态(==4)和响应码(>= 200 & <= 299)是否正确
+                if(xhr.readyState == 4){
+                    //根据响应码的不同改变 p 实例对象的状态
+                    if(xhr.status >= 200 && xhr.status <= 299){
+                        resolve(xhr.response)
+                    }else{
+                        reject(xhr.status);
+                    }
+                }
+            }
+        });
+
+        //对不同的转态使用 then() 指定回调进行处理
+        p.then(function(value){
+            console.log(value);
+        },function(reason){
+            console.error(reason);
+        });
+        
+    </script>
+</body>
+</html>

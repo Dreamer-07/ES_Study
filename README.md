@@ -1,6 +1,6 @@
 # ECMASrcipt 6-11
 
-## 第一章 ES介绍
+# 第一章 ES介绍
 
 ECMAScript 是由 Ecma 国际通过 ECMA-262 标准化的**脚本程序设计语言**
 
@@ -16,9 +16,9 @@ ECMAScript 是由 Ecma 国际通过 ECMA-262 标准化的**脚本程序设计语
 
 兼容性：https://www.caniuse.com/?search=ES6
 
-## 第二章 ES6
+# 第二章 ES6 新语法
 
-### 2.1 let & const
+## 2.1 let & const
 
 let 语法特点
 
@@ -138,7 +138,7 @@ TEAM[0] = "C";
 4. **块级作用域**
 5. 对于数组和对象元素的修改，不能算作时对常量的修改，不会报错
 
-### 2.2 ES6 - 变量的解构赋值
+## 2.2 ES6 - 变量的解构赋值
 
 > 解构赋值：ES6 允许**按照一定模式**从数组和对象中提取值，对变量进行赋值
 
@@ -172,7 +172,7 @@ console.log(D);
 console.log(E);
 ```
 
-### 2.3 ES6 - 模板字符串
+## 2.3 ES6 - 模板字符串
 
 > ES中支持使用 **``** 声明字符串
 
@@ -199,7 +199,7 @@ console.log(out);
 1. 内容中可以直接出现换行符
 2. 可以直接使用 `${}` 引用对应的变量
 
-### 2.4 ES6 - 简化对象的写法
+## 2.4 ES6 - 简化对象的写法
 
 > ES6 允许在大括号{}内，直接写入变量和函数，作为对象的属性和方法
 
@@ -222,7 +222,7 @@ console.log(servant);
 
 - 在 {} 内部定义方法时，可以忽略 function 关键字，这样定义的方法使用的是 **非匿名函数** 定义的
 
-### 2.5 ES6 - 箭头函数
+## 2.5 ES6 - 箭头函数
 
 > 语法：变量名 = ([形参1...]) => {函数体};
 
@@ -314,7 +314,7 @@ console.log(result);
 1. 箭头函数适合于 this 无关的函数，如：定时器，数组的方法回调
 2. 箭头函数不适合于 this 有关的函数，如：DOM 事件回调，对象的方法定义
 
-### 2.6 参数默认值
+## 2.6 参数默认值
 
 > ES6 允许函数参数赋值为初始值
 
@@ -341,7 +341,7 @@ connect({
 1. **规范**：将带默认值的参数放在后面
 2. 与解构赋值结合 - 直接使用时也可以设置初始值
 
-### 2.7 rest 参数
+## 2.7 rest 参数
 
 > ES6 中引入 rest 参数，用于获取函数的实参，用来代替 arguments
 
@@ -361,9 +361,9 @@ function args(a,b,...args){
 args("BYQ","BYQ","BYQ","BYQ","BYQ");
 ```
 
-### 2.8 spread 扩展运算符
+## 2.8 spread 扩展运算符
 
-#### ... 扩展运算符
+### ... 扩展运算符
 
 > ... 扩展运算符能将 [数组] 转换为逗号,分隔 [参数序列]
 
@@ -386,7 +386,7 @@ chunwan(...arr);
 
    ![image-20201204104022221](README.assets/image-20201204104022221.png)
 
-#### ... 扩展运算符的应用
+### ... 扩展运算符的应用
 
 ```javascript
 //1. 数组的合并
@@ -411,9 +411,9 @@ var divArrs = [...divs];
 console.log(divArrs);
 ```
 
-### 2.9 Symbol
+## 2.9 Symbol
 
-#### 2.9.1 基本使用
+### 2.9.1 基本使用
 
 ES6 引入了一种**新的数据类型 Symbol**，表示独一无二的值，作为 JavaScript 语言的第七种数据类型，一种类似于字符串的数据类型
 
@@ -447,7 +447,7 @@ JS 七种数据类型总结：**USONB：you are so niubility**
 - n: null number
 - b: boolean
 
-#### 2.9.2 创建对象的属性
+### 2.9.2 创建对象的属性
 
 **扩展原对象中的属性/方法**
 
@@ -496,7 +496,7 @@ let byq = {
 console.log(byq);
 ```
 
-#### 2.9.3 Symbol内置值
+### 2.9.3 Symbol内置值
 
 > 对象可以通过调用对应的方法触发对应的 Symbol 内置值
 >
@@ -541,7 +541,7 @@ arr2[Symbol.isConcatSpreadable] = false; //不展开
 console.log(arr1.concat(arr2)); // ["b", "y", "q", Array(3)]
 ```
 
-### 2.10 迭代器
+## 2.10 迭代器
 
 > 接口：对象具有对应的属性，这里指的是 Symbol.iterator 内置值
 
@@ -609,7 +609,7 @@ done：遍历是否完成，遍历完成就为 true，否则为 false
 */
 ```
 
-#### 2.10.1 自定义迭代器
+### 2.10.1 自定义迭代器
 
 ```javascript
 //声明一个对象
@@ -648,7 +648,7 @@ for(let v of servant){
 
 ![image-20201206230903987](README.assets/image-20201206230903987.png)
 
-### 2.11 生成器
+## 2.11 生成器
 
 > 生成器函数是 ES6 提供的一种 **异步编程解决方案**，语法行为于传统函数完全不同
 
@@ -768,7 +768,255 @@ let iterator = start();
 iterator.next(); //执行第一个 yield 函数体
 ```
 
+生成器函数实例2
 
+```javascript
+//模拟三个请求，将三个请求分成三个任务
+function getUserInfo(id){
+    //模拟请求
+    setTimeout(() => {
+        console.log('--- 获取用户信息');
+        console.log('id编号:' + id);
+        //执行下一个异步任务
+        iterator.next('[用户信息]')
+    },1000);
+}
 
+function getOrderInfo(userInfo){
+    setTimeout(() => {
+        console.log('--- 获取用户订单信息');
+        console.log('用户信息:' + userInfo);
+        //执行下一个异步任务
+        iterator.next('[订单编号]')
+    },1000)
+}
 
+function getGoodInfo(orderId){
+    setTimeout(() => {
+        console.log('--- 获取商品信息');
+        console.log(orderId);
+    },1000)
+}
 
+//使用生成器整合三个任务
+function * get(id){
+    let userInfo = yield getUserInfo(id);
+    let orderInfo = yield getOrderInfo(userInfo);
+    let goodInfo = yield getGoodInfo(orderInfo);
+}
+
+//获取迭代器对象
+let iterator = get(123);
+//执行第一个异步任务
+iterator.next();
+```
+
+![image-20201207221758823](README.assets/image-20201207221758823.png)
+
+## 2.12 Promise 入门
+
+Promise 是 ES6 引入的**异步编程**的新解决方案，语法上 Promise 是一个构造函数，用来封装异步操作并可以获取其成功或失败的结果
+
+基本语法：实例化 & then() 处理数据
+
+```javascript
+/* 
+实例化 Promise 对象
+     - 传入一个函数实例，设置两个参数，第一个为 resolve，第二个为 reject (变量名可以自定义，但建议这样写)
+*/
+const p = new Promise(function(resolve,reject){
+    //设置异步任务
+    setTimeout(function(){
+        //模拟获取数据库数据
+        /* 
+        根据不同的情况调用不同的方法修改 实例对象p 的状态
+        	- 成功时调用 resolve(数据);
+            - 异常时调用 reject(数据);
+        */
+
+        // let data = '获取数据库数据';
+        // resolve(data);
+        let err = '出现异常啦';
+        reject(err);
+    },1000);
+});  
+/* 
+调用 Promise.prototype.then() 方法区分该异步任务不同状态进行处理 
+传入两个函数实例作为形参
+	- 第一个为成功时的处理:接收一个参数(resolve()调用时传入的)，变量名建议为 value
+	- 第二个为失败时的处理:接收一个参数(reject()调用时传入的)，变量名建议为 reason
+*/
+p.then(
+    function(value){
+        console.log(value);
+    },function(reason){
+        console.error(reason);
+    }
+);
+```
+
+Promise 读取封装文件 - 需要使用 Node JS API
+
+Promise 封装 Ajax 请求
+
+```javascript
+// 接口地址 - http://localhost:8081/getAjax
+
+//使用 Promise 封装对应的 Ajax 请求
+const p = new Promise((resolve,reject) => {
+    //使用原生 JS
+    //1. 创建对象
+    const xhr = new XMLHttpRequest();
+    //2. 初始化
+    xhr.open('GET','http://localhost:8081/getAjax');
+    //3. 发送请求
+    xhr.send();
+    //4. 处理响应数据
+    xhr.onreadystatechange = function(){
+        //判断状态(==4)和响应码(>= 200 & <= 299)是否正确
+        if(xhr.readyState == 4){
+            //根据响应码的不同改变 p 实例对象的状态
+            if(xhr.status >= 200 && xhr.status <= 299){
+                resolve(xhr.response)
+            }else{
+                reject(xhr.status);
+            }
+        }
+    }
+});
+
+//对不同的转态使用 then() 指定回调进行处理
+p.then(function(value){
+    console.log(value);
+},function(reason){
+    console.error(reason);
+});
+```
+
+### then()
+
+关于其返回结果
+
+- 其返回结果是 Promise 对象，而对象的状态由 **回调函数的执行结果** 决定
+
+  ```javascript
+  const p = new Promise((resolve,reject) => {
+      setTimeout(function(){
+          let data = '查找数据';
+          resolve(data);
+          // reject(data);
+      },1000)
+  });
+  
+  /* 调用 then() 方法 - 关于其返回结果
+  	- 其返回结果是 Promise 对象，而对象的状态由 回调函数的执行结果 决定
+  		1. 如果回调函数中返回的结果是 非promise 类型的属性,返回值为 Promise 对象的属性 [[PromiseResult]]
+  		2. 如果不返回任何数据，则其对应的属性值为 undefined 
+  		3. 如果返回的是 Promise 对象，则根据其状态就决定 then() 方法返回值 Promise 对象的状态
+  	- 对于这个特点，支持了多个 Promise 之间的链式调用，避免回调地狱
+  */
+  const result = p.then(value => {
+      console.log(value);
+      //1. 非 Promise 类型的属性
+      // return '123';
+      //2. 是 Promise 对象
+      // return new Promise((resolve,reject) => {
+      //     resolve('emt');
+      // });
+      //3. 抛出异常
+      // throw '出错了';
+      return '123';
+  },reason => {
+      console.warn(reason);
+      return '123';
+  });
+  ```
+
+  1. 如果回调函数中返回的结果是 非promise 类型的属性,返回值为 Promise 对象的属性 [[PromiseResult]]
+
+     ![image-20201210231919610](README.assets/image-20201210231919610.png)
+
+  2. 如果不返回任何数据，则其对应的属性值为 undefined
+
+     ![image-20201210231938432](README.assets/image-20201210231938432.png)
+
+  3. 如果返回的是 Promise 对象，则根据其状态就决定 then() 方法返回值 Promise 对象的状态
+
+     ![image-20201210232005009](README.assets/image-20201210232005009.png)
+
+  4. 抛出异常，异常信息就为对应的属性值
+
+     ![image-20201210232100265](README.assets/image-20201210232100265.png)
+
+- 对于这个特点，支持了多个 Promise 之间的**链式调用**，避免回调地狱
+
+  ```javascript
+  result
+      .then(value => {
+      console.log(value);
+      return new Promise((resolve,reject) => resolve('订单数据'))
+  })
+  //根据前一个 then() 调用返回的 Promise 对象状态再次调用 then() 方法
+  //  - 可以只定义一个回调函数，只处理成功状态
+      .then(value => {
+      console.log(value);
+  });
+  ```
+
+  
+
+![image-20201210232235447](README.assets/image-20201210232235447.png)
+
+### catch()
+
+> 使用 catch() 方法处理 Promise 实例对象的失败状态
+
+```javascript
+const p = new Promise((resolve,reject) => {
+    setTimeout(function(){
+        //设置 p 的状态为失败
+        reject('出错了');
+    },1000)
+});
+
+//使用 catch() 方法处理 Promise 实例对象的失败状态
+p.catch(function(reason){
+    console.error(reason);
+})
+```
+
+## 2.13 Set
+
+ES6 提供给了新的数据结构 **Set(集合)**，它类似于数组，但成员的值都是**唯一**的
+
+集合实现了 iterator 接口，所以可以使用 [扩展运算符] 和 [for...of ] 进行遍历
+
+集合相关的基本属性和方法
+
+1. size 返回集合中的元素个数
+2. add() 添加一个新元素，返回当前集合
+3. delete() 删除元素，返回 boolean 值
+4. has() 检测集合中是否包含某个元素，返回 boolean 值
+5. clear() 清空集合元素
+
+```javascript
+//创建一个 Set 集合的实例对象
+let s = new Set(['byq','emt','ohhhh','ohhhh']); //可以传入一个数组作为集合内的初始值
+
+/* 集合相关的基本属性和方法
+	1. size 返回集合中的元素个数
+	2. add() 添加一个新元素，返回当前集合
+	3. delete() 删除元素，返回 boolean 值
+	4. has() 检测集合中是否包含某个元素，返回 boolean 值
+	5. clear() 清空集合元素       
+*/
+console.log(s.size); //查看集合内的元素个数
+s.add('dreamer07'); //添加一个新元素，返回当前集合
+s.delete('ohhhh'); //删除元素，返回 boolean 值
+console.log(s.has('byq'));//检测集合中是否包含某个元素，返回 boolean 值
+s.clear();
+
+console.log(s);
+```
+
+## 2.14 Map

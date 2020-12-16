@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ES6 - Promise.prototype.then</title>
+</head>
+<body>
+    <script>
+        //创建一个 Promise 对象
+        const p = new Promise((resolve,reject) => {
+            setTimeout(function(){
+                let data = '查找数据';
+                resolve(data);
+                // reject(data);
+            },1000)
+        });
+
+        /* 调用 then() 方法 - 关于其返回结果
+            - 其返回结果是 Promise 对象，而对象的状态由 回调函数的执行结果 决定
+                1. 如果回调函数中返回的结果是 非promise 类型的属性,返回值为 Promise 对象的属性 [[PromiseResult]]
+                2. 如果不返回任何数据，则其对应的属性值为 undefined 
+                3. 如果返回的是 Promise 对象，则根据其状态就决定 then() 方法返回值 Promise 对象的状态
+            - 对于这个特点，支持了多个 Promise 之间的链式调用，避免回调地狱
+        */
+        const result = p.then(value => {
+            console.log(value);
+            //1. 非 Promise 类型的属性
+            // return '123';
+            //2. 是 Promise 对象
+            // return new Promise((resolve,reject) => {
+            //     resolve('emt');
+            // });
+            //3. 抛出异常
+            // throw '出错了';
+            return '123';
+        },reason => {
+            console.warn(reason);
+            return '123';
+        });
+
+        console.log(result);
+
+        //链式调用 then();
+        result
+        .then(value => {
+            console.log(value);
+            return new Promise((resolve,reject) => resolve('订单数据'))
+        })
+        //根据前一个 then() 调用返回的 Promise 对象状态再次调用 then() 方法
+        //  - 可以只定义一个回调函数，只处理成功状态
+        .then(value => {
+            console.log(value);
+        });
+
+    </script>
+</body>
+</html>

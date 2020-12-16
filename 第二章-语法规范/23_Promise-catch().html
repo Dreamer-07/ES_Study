@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ES6 - Promise.catch()</title>
+</head>
+<body>
+    <script>
+        const p = new Promise((resolve,reject) => {
+            setTimeout(function(){
+                //设置 p 的状态为失败
+                reject('出错了');
+            },1000)
+        });
+
+        //使用 catch() 方法处理 Promise 实例对象的失败状态
+        p.catch(function(reason){
+            console.error(reason);
+        })
+    </script>
+</body>
+</html>
