@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ES6 - Map</title>
+</head>
+<body>
+    <script>
+        //声明 Map
+        let m = new Map();
+
+        //set(key,value) 添加元素
+        m.set('老婆','巴御前');
+        m.set('change',function(){
+            console.log('巴御前天下第一');
+        });
+        m.set('abc','abc');
+
+        //size 获取 Map 中所有元素的集合
+        console.log(m.size);
+
+        //delete(key) 删除对应 key 及其 value
+        m.delete('abc');
+
+        //get(key) 获取对应 key 的 value 值
+        console.log(m.get('老婆'));
+
+        console.log(m);
+
+        //clear() 清空对应 Map 中的所有数据
+        let c = new Map();
+        c.set('key1','value');
+        c.set('key1','value');
+        c.set('key1','value');
+        c.clear();
+        console.log(c);
+    </script>
+</body>
+</html>

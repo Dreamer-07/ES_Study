@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ES6 - class 类声明</title>
+</head>
+<body>
+    <script>
+        //使用 ES5 的语法
+        //构造函数
+        function Phone(brand,price){
+            //设置属性
+            this.brand = brand;
+            this.price = price;
+        }
+
+        //添加方法 - 通过原型对象
+        Phone.prototype.call = function(){
+            console.log('拨打电话');
+        }
+
+        //实例化对象
+        let xiaoMi = new Phone('小米6X',1999);
+        xiaoMi.call();
+        console.log(xiaoMi);
+
+        //使用 ES6 的语法
+        class Shouji{
+            //constructor 定义构造函数
+            constructor(brand,price){
+                this.brand = brand;
+                this.price = price;
+            };
+
+            //定义方法时，只能使用 '函数名(){}' 的格式
+            call(){
+                console.log('可以拨打电话');
+            };
+        }
+
+        //每当创建对应的类的对象时，都会调用对应的 构造函数
+        let huaWei = new Shouji('huaWei',1999);
+        console.log(huaWei);
+
+    </script>
+</body>
+</html>

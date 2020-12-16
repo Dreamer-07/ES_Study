@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ES6 - 类的静态成员</title>
+</head>
+<body>
+    <script>
+        //使用 ES5 声明构造函数的 '静态属性'
+        function Person(name,age) {
+            this.name = name; 
+            this.age = age;
+        }
+
+        //声明 构造函数对象 的属性时，就作为对应的 静态属性
+        Person.abc = 'geek';
+        Person.fuc = function (params) {
+            console.log(params);
+        }
+
+        let p1 = new Person('巴御前',16); //创建实例对象
+        console.log(p1.name);
+        console.log(p1.abc); //undefined - 实例对象不能直接访问构造函数的 '静态属性'
+        console.log(Person.abc); //geek
+
+        //ES 6 中使用 static 声明类的静态属性
+        class Dog{
+            //通过 static 声明对应的 静态属性/方法
+            static abc = 'geek';
+            constructor(name,info){
+                this.name = name;
+                this.info = info;
+            };
+        }
+        let shangguangliang = new Dog('上官亮','ohhhh');
+        console.log(shangguangliang.name);
+        console.log(shangguangliang.abc); //undefined
+        console.log(Dog.abc); //geek
+    </script>
+</body>
+</html>

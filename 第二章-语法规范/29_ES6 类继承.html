@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ES6 - 类继承</title>
+</head>
+<body>
+    <script>
+        //原理和 ES5 一样，使用 原型链 ＋ 构造函数
+
+        //定义父类
+        class Person{
+            constructor(name,age){
+                this.name = name;
+                this.age = age;
+            }
+
+            talk(){
+                console.log('我会说话');
+            }
+        }
+
+        //使用 extends 在类定义时指定要继承的父类
+        class Laopo extends Person{
+            constructor(name,age,info,color){
+                //调用父类的构造函数
+                super(name,age); // == Person(this,name,age)
+                this.info = info;
+                this.color = color;
+            }
+
+            playGame(){
+                console.log('玩游戏');
+            }
+        }
+
+        //创建子类实例
+        const byq = new Laopo('巴御前',20,'巴御前のことがだいすきです！','???');
+        byq.talk();
+        byq.playGame();
+        console.log(byq);
+    </script>
+</body>
+</html>
