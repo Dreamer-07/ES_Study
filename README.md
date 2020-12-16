@@ -770,5 +770,261 @@ iterator.next(); //执行第一个 yield 函数体
 
 
 
+## 2.14 Map
 
+ES6 提供了 Map 数据结构，类似于对象，由 key 和 value 的键值对组成，但是 key 的数据类型不限于字符串，可以是任何类型(包括对象)
 
+Map 也实现了 iterator 接口，所以可以使用 [扩展运算符] 和 [for ... of] 进行遍历
+
+常用的属性和方法
+
+- size 获取 Map 中所有元素的集合
+- set(key,value) 添加元素
+- delete(key) 删除对应 key 及其 value
+- get(key) 获取对应 key 的 value 值
+- clear() 清空对应 Map 中的所有数据
+
+```javascript
+//声明 Map
+let m = new Map();
+
+//set(key,value) 添加元素
+m.set('老婆','巴御前');
+m.set('change',function(){
+    console.log('巴御前天下第一');
+});
+m.set('abc','abc');
+
+//size 获取 Map 中所有元素的集合
+console.log(m.size);
+
+//delete(key) 删除对应 key 及其 value
+m.delete('abc');
+
+//get(key) 获取对应 key 的 value 值
+console.log(m.get('老婆'));
+
+console.log(m);
+
+//clear() 清空对应 Map 中的所有数据
+let c = new Map();
+c.set('key1','value');
+c.set('key1','value');
+c.set('key1','value');
+c.clear();
+console.log(c);
+```
+
+## 2.15 class 类
+
+ES6 提供了更像传统语言的写法(Java,C++...).引入了 Class(类) 这个概念，作为对象的模板，通过 class 关键字，可以定义类。基本上
+
+ES6 的 class 只是一个语法糖。在绝大多数功能不变的情况下，让 **对象** 的写法更加清晰，更像面向对象编程的语法
+
+知识点
+
+1. class 声明类
+
+2. constructor 定义构造函数初始化
+
+   ```javascript
+   //使用 ES5 的语法
+   //构造函数
+   function Phone(brand,price){
+       //设置属性
+       this.brand = brand;
+       this.price = price;
+   }
+   
+   //添加方法 - 通过原型对象
+   Phone.prototype.call = function(){
+       console.log('拨打电话');
+   }
+   
+   //实例化对象
+   let xiaoMi = new Phone('小米6X',1999);
+   xiaoMi.call();
+   console.log(xiaoMi);
+   
+   //使用 ES6 的语法
+   class Shouji{
+       //constructor 定义构造函数
+       constructor(brand,price){
+           this.brand = brand;
+           this.price = price;
+       };
+   
+       //定义方法时，只能使用 '函数名(){}' 的格式
+       call(){
+           console.log('可以拨打电话');
+       };
+   }
+   
+   //每当创建对应的类的对象时，都会调用对应的 构造函数
+   let huaWei = new Shouji('huaWei',1999);
+   console.log(huaWei);
+   ```
+
+3. extends 继承父类
+
+4. super 调用父类构造方法
+
+   ```javascript
+   //----------------- ES5 类继承
+   //定义父类的构造函数
+   function Person(name,age){
+       this.name = name;
+       this.age = age;
+   }
+   //添加父类的方法
+   Person.prototype.setName = function (name) {
+       this.name = name;
+   }
+   
+   //定义子类型
+   function Student(name,age,price){
+       //调用父类的构造函数
+       Person.call(this,name,age);
+       this.price = price;
+   }
+   
+   //定义子类型的原型对象为父类型的实例对象
+   /* 
+   Student 的原型对象作为 Person 实例，
+   其 __proto__ 隐式原型为 Person() 的 显式原型
+   而 Person 的 __proto__ 隐式原型为 Object 原型对象
+   */
+   Student.prototype = new Person();
+   //修改子类型原型对象的 constructor 为子类型
+   Student.prototype.constructor = Student;
+   
+   //添加子类的方法
+   Student.prototype.setPrice = function (price) {
+       this.price = price;
+   }
+   
+   //创建子类实例对象
+   let student = new Student('巴御前',17,'我老婆，快爬');
+   console.log(student);
+   //调用对应的方法
+   student.setName('巴妈');
+   student.setPrice('阿巴巴阿巴');
+   console.log(student);
+   
+   //--------------- ES6 类继承
+   //定义父类
+   class Person{
+       constructor(name,age){
+           this.name = name;
+           this.age = age;
+       }
+   
+       talk(){
+           console.log('我会说话');
+       }
+   }
+   
+   //使用 extends 在类定义时指定要继承的父类
+   class Laopo extends Person{
+       constructor(name,age,info,color){
+           //调用父类的构造函数
+           super(name,age); // == Person(this,name,age)
+           this.info = info;
+           this.color = color;
+       }
+   
+       playGame(){
+           console.log('玩游戏');
+       }
+   }
+   
+   //创建子类实例
+   const byq = new Laopo('巴御前',20,'巴御前のことがだいすきです！','???');
+   byq.talk();
+   byq.playGame();
+   console.log(byq);
+   ```
+
+5. static 定义静态方法和属性
+
+   ```javascript
+   //使用 ES5 声明构造函数的 '静态属性'
+   function Person(name,age) {
+       this.name = name; 
+       this.age = age;
+   }
+   
+   //声明 构造函数对象 的属性时，就作为对应的 静态属性
+   Person.abc = 'geek';
+   Person.fuc = function (params) {
+       console.log(params);
+   }
+   
+   let p1 = new Person('巴御前',16); //创建实例对象
+   console.log(p1.name);
+   console.log(p1.abc); //undefined - 实例对象不能直接访问构造函数的 '静态属性'
+   console.log(Person.abc); //geek
+   
+   //ES 6 中使用 static 声明类的静态属性
+   class Dog{
+       constructor(name,info){
+           this.name = name;
+           this.info = info;
+       };
+       //通过 static 声明对应的 静态属性/方法
+       static abc = 'geek';
+   }
+   let shangguangliang = new Dog('上官亮','ohhhh');
+   console.log(shangguangliang.name);
+   console.log(shangguangliang.abc); //undefined
+   console.log(Dog.abc); //geek
+   ```
+
+   **总结：静态属性是属于对应的类(构造函数)的属性，创建的对应实例不能直接进行访问**
+
+6. 父类方法可以重写
+
+   ```javascript
+   class Person{
+       constructor(name,age){
+           this.name = name;
+           this.age = age;
+       }
+   
+       //定义方法
+       talk(){
+           console.log('说话');
+       }
+   }
+   
+   //定义子类继承父类
+   class Student extends Person{
+       constructor(name,age,info){
+           super(name,age);
+           this.info = info;
+       }
+   
+       photo(){
+           console.log('拍照');
+       }
+   
+       //定义和父类重名的方法 - 会 '覆盖' 父类中的方法
+       talk(){
+           console.log('阿巴阿巴');
+       }
+   }
+   
+   /*
+   通过子类创建的实例对象，调用和父类的同名方法时，优先调用子类的
+   */
+   let stu = new Student('A',16,'abc');
+   stu.talk(); //阿巴阿巴
+   ```
+
+7. get 和 set
+
+   ```
+   
+   ```
+
+   

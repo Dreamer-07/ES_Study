@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ES5 - 对象继承(使用原型链加构造函数组合继承)</title>
+</head>
+<body>
+    <script>
+        //定义父类的构造函数
+        function Person(name,age){
+            this.name = name;
+            this.age = age;
+        }
+        //添加父类的方法
+        Person.prototype.setName = function (name) {
+            this.name = name;
+        }
+
+        //定义子类型
+        function Student(name,age,price){
+            //调用父类的构造函数
+            Person.call(this,name,age);
+            this.price = price;
+        }
+
+        //定义子类型的原型对象为父类型的实例对象
+        /* 
+        Student 的原型对象作为 Person 实例，
+        其 __proto__ 隐式原型为 Person() 的 显式原型
+        而 Person 的 __proto__ 隐式原型为 Object 原型对象
+        */
+        Student.prototype = new Person();
+        //修改子类型原型对象的 constructor 为子类型
+        Student.prototype.constructor = Student;
+
+        //添加子类的方法
+        Student.prototype.setPrice = function (price) {
+            this.price = price;
+        }
+
+        //创建子类实例对象
+        let student = new Student('巴御前',17,'我老婆，快爬');
+        console.log(student);
+        //调用对应的方法
+        student.setName('巴妈');
+        student.setPrice('阿巴巴阿巴');
+        console.log(student);
+    </script>
+</body>
+</html>
