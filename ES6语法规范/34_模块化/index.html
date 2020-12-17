@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ES6 - 模块化</title>
+</head>
+<body>
+    <!-- ES6 模块化语法的方式一
+        指定 <script></script> 的 `type` 属性为 module，
+        在其内部使用 import 关键字导入 JS 文件中的模块
+    -->
+    <script type="module">
+        //1. 使用通用的方式导入 - import [要导入的接口] / * as 变量名 from '文件路径'
+        import * as m1 from "./src/js/m1.js";
+        console.log(m1);
+        
+        import * as m2 from './src/js/m2.js';
+        console.log(m2);
+
+        import * as m3 from './src/js/m3.js';
+        console.log(m3);
+
+        //2. 使用解构赋值形式导入
+        import {name,test1} from "./src/js/m1.js";
+        console.log(name);
+        console.log(test1);
+        //2.1 对于重名的变量可以使用 as 起别名
+        import {name as m2_name,test2} from "./src/js/m2.js";
+        console.log(m2_name);
+        console.log(test2);
+        import {default as m3_2} from './src/js/m3.js';
+        console.log(m3_2);
+
+        //3. 使用简便方式 - 针对于默认暴露
+        import m3_3 from './src/js/m3.js';
+        console.log(m3_3);
+    </script>
+
+    <!-- ES6 模块化语法的方式二 
+        将导入模块的 JS 代码也额外编写成一个 JS 文件 (作为入口文件) ，
+        在主程序中使用 JS 导入对于的文件，并设置 `type` 属性为 module    
+    -->
+    <script src="./src/js/index.js" type="module"></script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ES6 - 对象方法扩展</title>
+</head>
+<body>
+    <script>
+        //1. Object.is(value1,value2) 判断两个值是否完全相等
+        console.log(Object.is(120,120)); //true
+        console.log(Object.is(NaN,NaN)); //true
+        console.log(NaN === NaN); //false - NaN 可以任何数据做比较(==/===)都会返回 false
+        
+        //2. Object.assign(obj1,obj2) 对象的合并
+        let p1 = {
+            a:'a',
+            b:'b',
+            c:'c'
+        }
+        let p2 = {
+            a:'A',
+            b:'B',
+            c:'C',
+            d:'D'
+        }
+        //对于重复的属性，优先使用第二个参数对象的属性
+        console.log(Object.assign(p1,p2));
+
+        //3. Object.setPrototypeof(obj1,obj2) 设置obj1的原型对象为obj2 
+        // Object.getPrototypeof(obj1) 获取obj1的原型对象
+        let o2 = {
+            name:'阿巴阿巴'
+        };
+        let o3 = {
+            name:'sgl是sb'
+        }
+        Object.setPrototypeOf(o2,o3);
+        console.log(o2);
+        console.log(Object.getPrototypeOf(o2));
+    </script>
+</body>
+</html>

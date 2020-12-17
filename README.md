@@ -1297,4 +1297,206 @@ ES6 的 class 只是一个语法糖。在绝大多数功能不变的情况下，
    p1.price = 7888;
    ```
 
+## 2.16 数值扩展
+
+> ES6 对于 Number 对象额外增加了一些属性
+
+```javascript
+//1. Number.EPSILON 是 JavaScript 表示的最小精度
+//该属性接近于 2.2204460492503130808472633361816E ^ -16，或者 2 ^ -52。
+//可以利用其进行小数之间的运算
+console.log(0.2 + 0.1,0.2 + 0.1 == 0.3); //0.30000000000000004 false
+function equals(a,b) {
+    if(Math.abs(a - b) < Number.EPSILON){
+        return true;
+    }else{
+        return false;
+    }
+}
+console.log(equals(0.2 + 0.1,0.3)); //true
+
+//2. 二进制和八进制
+let a = 0b1010; //二进制
+let b = 0o777; //八进制
+let c = 0823; //十进制
+let d = 0xff; //十六进制
+console.log(a,b,c,d); //10 511 823 255
+
+//3. Number.inFinite 检测一个数值是否为有限数
+console.log(Number.isFinite(777)); //true
+console.log(Number.isFinite(777 / 0)); //false
+console.log(Number.isFinite(Infinity)); //false - Infinity 无穷大
+
+//4. Number.parse Int/Float 将字符串转换为对应的数值型数据(Int / Float)类型
+console.log(Number.parseInt('123456abc')); //123456
+console.log(Number.parseFloat('3.1415926whd')); //3.1415926
+console.log(Number.parseFloat('whd456.15')); //NaN
+
+//5. Number.isInteger 判断一个数是否为整数
+console.log(Number.isInteger('5')); //false
+console.log(Number.isInteger(777)); //true
+console.log(Number.isInteger(2.5)); //false
+
+//6. Math.trunc 将数字的小数部分抹掉
+console.log(Math.trunc(2.5)); //2
+console.log(Math.trunc('7.5')); //7
+
+//7. Math.sign 判断一个数为正数(1) / 0(0) / 负数(-1)
+console.log(Math.sign("15")); //1 
+console.log(Math.sign("0")); //0
+console.log(Math.sign("-2")); //-1
+```
+
+## 2.17 对象扩展
+
+> ES6 对于 Object 对象额外指定了新语法
+
+```javascript
+//1. Object.is(value1,value2) 判断两个值是否完全相等
+console.log(Object.is(120,120)); //true
+console.log(Object.is(NaN,NaN)); //true
+console.log(NaN === NaN); //false - NaN 可以任何数据做比较(==/===)都会返回 false
+
+//2. Object.assign(obj1,obj2) 对象的合并
+let p1 = {
+    a:'a',
+    b:'b',
+    c:'c'
+}
+let p2 = {
+    a:'A',
+    b:'B',
+    c:'C',
+    d:'D'
+}
+//对于重复的属性，优先使用第二个参数对象的属性
+console.log(Object.assign(p1,p2));
+
+//3. Object.setPrototypeof(obj1,obj2) 设置obj1的原型对象为obj2 
+// Object.getPrototypeof(obj1) 获取obj1的原型对象
+let o2 = {
+    name:'阿巴阿巴'
+};
+let o3 = {
+    name:'sgl是sb'
+}
+Object.setPrototypeOf(o2,o3);
+console.log(o2);
+console.log(Object.getPrototypeOf(o2));
+```
+
+## 2.18 模块化
+
+模块化是指将一个大的程序文件，拆分成许多小的文件，任何将小文件组合起来
+
+好处
+
+1. 防止命名冲突
+2. 代码复用
+3. 高维护性
+
+ES6 之前的模块化规范产品
+
+1. CommonJS => NodeJs，Browserify
+2. AMD => requireJS
+3. CMD => sealJs
+
+### ES6 模块化语法 
+
+**使用 export 在 JS 文件中暴露对外接口的方式**
+
+1. 分别暴露
+
+   ```javascript
+   //分别暴露
+   //使用 export 定义对外暴漏接口
+   export let name = '巴御前';
    
+   export function test1(){
+       console.log('export 测试接口');
+   }
+   ```
+
+2. 统一暴露
+
+   ```javascript
+   //同一暴露
+   let name = 'm2';
+   
+   function test2(){
+       console.log('ms test()...');
+   }
+   
+   export {
+       name,
+       test2
+   }
+   ```
+
+3. 默认暴露
+
+   ```javascript
+   //默认暴露 - export default 暴露的数据
+   export default {
+       name:'m3',
+       test3(){
+           console.log('m3...test3()');
+       }
+   }
+   ```
+
+   **对于默认暴露的数据，使用 import 导入的变量还需要加上一层 default 属性**
+
+**使用 import 导入 JS 文件中的模块**
+
+导入的三种方式
+
+1. 使用通用的方式导入 - import [要导入的接口] / * as 变量名 from '文件路径'
+
+   ```javascript
+   import * as m1 from "./src/js/m1.js";
+   console.log(m1);
+   
+   import * as m2 from './src/js/m2.js';
+   console.log(m2);
+   
+   import * as m3 from './src/js/m3.js';
+   console.log(m3);
+   ```
+
+2. 使用解构赋值进行导入
+
+   ```javascript
+   import {name,test1} from "./src/js/m1.js";
+   console.log(name);
+   console.log(test1);
+   //2.1 对于重名的变量可以使用 as 起别名
+   import {name as m2_name,test2} from "./src/js/m2.js";
+   console.log(m2_name);
+   console.log(test2);
+   import {default as m3_2} from './src/js/m3.js';
+   console.log(m3_2);
+   ```
+
+3. 使用简便方式 - 只能针对于默认暴露
+
+   ```javascript
+   import m3_3 from './src/js/m3.js';
+   console.log(m3_3);
+   ```
+
+   **对于方式 2、3 保存的导入的默认接口，可以直接访问属性，而不用额外访问 default 属性**
+
+**游览器使用 ES6 模块化语法的方式**
+
+1. 指定 \<script>\</script> 的 `type` 属性为 module，在其内部使用 import 关键字导入 JS 文件中的模块
+2. 将导入模块的 JS 代码也额外编写成一个 JS 文件 (作为入口文件) ，在主程序中使用 JS 导入对于的文件，并设置 `type` 属性为 module
+
+### ES6 模块化代码转换
+
+> 如果需要兼容所有的游览器，在项目完成时，需要先将 JS 文件进行打包编译成 ES5 的语法，在导入到主程序中即可
+
+1. 安装工具: npm i`babel-cli`(babel的命令行工具) `babel-preset-anv`(babel 编译工具) `browserify`(打包工具)
+2.  npx babel **JS文件夹** -d **编译后的文件路径**
+3. 打包：npx browserify 入口文件 -o 打包后的文件路径/文件名
+
