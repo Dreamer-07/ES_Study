@@ -16,7 +16,7 @@ ECMAScript 是由 Ecma 国际通过 ECMA-262 标准化的**脚本程序设计语
 
 兼容性：https://www.caniuse.com/?search=ES6
 
-# 第二章 ES6 新语法
+# 第二章 ES6 新特性
 
 ## 2.1 let & const
 
@@ -1496,7 +1496,188 @@ ES6 之前的模块化规范产品
 
 > 如果需要兼容所有的游览器，在项目完成时，需要先将 JS 文件进行打包编译成 ES5 的语法，在导入到主程序中即可
 
-1. 安装工具: npm i`babel-cli`(babel的命令行工具) `babel-preset-anv`(babel 编译工具) `browserify`(打包工具)
-2.  npx babel **JS文件夹** -d **编译后的文件路径**
-3. 打包：npx browserify 入口文件 -o 打包后的文件路径/文件名
+1. 使用 `npm init --yes` 初始化
+2. 安装工具: npm i `babel-cli`(babel的命令行工具) `babel-preset-anv`(babel 编译工具) `browserify`(打包工具) -D
+3. 转换：npx babel **JS 源文件目录** -d **编译后的文件路径** --presets=babel-preset-env
+4. 打包：npx browserify 入口文件 -o 打包后的文件路径/文件名
 
+### 引入 NPM 包
+
+1. 使用 npm 命令行下载对应的 npm 包
+
+2. 在 JS 中使用 import 导入对应的 npm 包，包名为下载时使用的
+
+   ```javascript
+   import $ from 'jquery'; //导入 npm 包，包名为安装时使用的
+   $('body').css('background','pink');
+   ```
+
+# 第三章 ES7 新特性
+
+## 3.1 Array.prototype.includes
+
+用来检测指定元素是否存在于数据中，存在访问 true，不存在访问 false
+
+```javascript
+// 1. Array.prototype.includes
+const arr = ['巴','御','前'];
+console.log(arr.includes('巴')); //true
+console.log(arr.includes('ba')); //false
+```
+
+## 3.2 **指数运算符
+
+使用 ** 可以直接进行次方运算，效果和 Math.pow() 相同
+
+```javascript
+console.log(2 ** 10); //1024
+console.log(Math.pow(2,10)); //1024 
+```
+
+
+
+# 第四章 ES8 新特性
+
+## 4.1 async 和 await
+
+async 和 await 两种语法结合可以让异步代码 **像** 同步代码一样
+
+### async 函数
+
+语法：anync 函数定义
+
+特点：
+
+- anync 函数的**返回值**都是 Promise 对象
+- promise 对象的结果由 async 函数执行的**返回值**结果决定
+
+返回值情况
+
+1. 返回值结果不为 Promise 对象，状态都为成功
+2. 抛出异常，状态为失败
+3. 返回值结果为 Promise 对象，状态对应
+
+```javascript
+//声明 async 函数
+async function get(value) {
+    /* 
+    async 函数的返回值是一个 Promise 对象
+    	该对象的状态成功与否和返回值结果有关
+    	1. 返回值结果不为 Promise 对象，状态都为成功(不返回时为 undefined，也是成功)
+    	2. 抛出异常，状态为失败
+    	3. 返回值结果为 Promise 对象，状态对应
+    */
+    //1. 返回值结果不为 Promise 对象，状态都为成功
+    // return 'suc'; // Promise: "fulfilled" : "suc"
+    // return null; // Promise {<fulfilled>: null}
+
+    //2. 抛出异常，状态为失败
+    // throw '发生错误啦'; // Promise {<rejected>: "发生错误啦"}
+
+    //3. 返回值结果为 Promise 对象，状态对应
+    return new Promise((resolve,rejecte) => {
+        //3.1 状态为成功 == 成功
+        resolve(value); // Promise : "fulfilled" : "巴御前"
+        //3.2 状态为失败 == 失败
+        // rejecte('阿巴阿巴'); //Promise : "rejected" : "阿巴阿巴"
+
+    })
+}
+
+//执行 async 函数
+let p = get('巴御前');
+console.log(p);
+p.then(
+    value => console.log(value),
+    reason => console.warn(reason)
+)
+```
+
+### await 表达式
+
+await 必须写在 async 函数中
+
+await 右侧的表达式一般为 promise 对象
+
+await 返回的是 promise 成功的值
+
+await 的 promise 失败了，就会抛出异常，需要通过 try..catch 捕获处理
+
+```javascript
+const p = new Promise((resolve,reject) => {
+    // resolve('成功啦');
+    reject('失败啦');
+});
+//await 必须写在 async 函数中
+async function main() {
+    try {m
+        //await 右侧的表达式一般为 promise 对象
+        let result = await p;
+        //await 返回的时 promise 成功的值
+        console.log(result); //成功啦
+    } catch (e) {
+        //await 的 promise 失败了，就会抛出异常，需要通过 try..catch 捕获处理
+        console.warn(e);
+    }
+}
+
+main();
+```
+
+### 使用 async 和 await 完成异步任务(读取文件)
+
+```javascript
+//1. 引入 fs 模块
+let fs = require('fs');
+
+//2. 定义异步任务
+function readChuShiBiao(){
+    return new Promise((resolve,reject) => {
+        fs.readFile("./resouces/出师表.md",(err,data) => {
+            //如果出现 err 就将 promise 状态修改为失败
+            if(err) reject(err);
+            resolve(data);
+        });
+    });
+}
+
+function readYueYangLouJi(){
+    return new Promise((resolve,reject) => {
+        fs.readFile("./resouces/岳阳楼记.md",(err,data) => {
+            //如果出现 err 就将 promise 状态修改为失败
+            if(err) reject(err);
+            resolve(data);
+        });
+    });
+}
+
+function readChangGeXing(){
+    return new Promise((resolve,reject) => {
+        fs.readFile("./resouces/长歌行.md",(err,data) => {
+            //如果出现 err 就将 promise 状态修改为失败
+            if(err) reject(err);
+            resolve(data);
+        });
+    });
+}
+
+//3. 使用 async + await 执行异步任务
+async function main(){
+    try{
+        //使用 await 执行异步任务并获取结果
+        let csb = await readChuShiBiao();
+        let yylj = await readYueYangLouJi();
+        let cgx = await readChangGeXing();
+
+        console.log(csb.toString());
+        console.log(yylj.toString());
+        console.log(cgx.toString());
+    } catch (e) {
+        console.warn(e);
+    }
+}
+
+main();
+```
+
+使用：**node JS文件** 命令执行

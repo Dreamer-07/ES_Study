@@ -1,9 +1,29 @@
-//入口文件 - 在这里导入需要的模块
+'use strict';
 
-import * as m1 from './m1.js';
-import * as m2 from './m2.js';
-import * as m3 from './m3.js';
+var _m = require('./m1.js');
 
-console.log(m1);
+var m1 = _interopRequireWildcard(_m);
+
+var _m2 = require('./m2.js');
+
+var m2 = _interopRequireWildcard(_m2);
+
+var _m3 = require('./m3.js');
+
+var m3 = _interopRequireWildcard(_m3);
+
+var _jquery = require('jquery');
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+console.log(m1); //入口文件 - 在这里导入需要的模块
+
 console.log(m2);
 console.log(m3);
+
+//导入 npm 包，包名为安装时使用的
+(0, _jquery2.default)('body').css('background', 'pink');

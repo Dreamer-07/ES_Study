@@ -1,8 +1,14 @@
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
 //同一暴露
-let name = 'm2';
+var name = 'm2';
 
 function test2() {
     console.log('ms test()...');
 }
 
-export { name, test2 };
+exports.name = name;
+exports.test2 = test2;

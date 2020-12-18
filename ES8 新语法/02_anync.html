@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ES8 - async</title>
+</head>
+<body>
+    <script>
+        //声明 async 函数
+        async function get(value) {
+            /* 
+            async 函数的返回值是一个 Promise 对象
+            该对象的状态成功与否和返回值结果有关
+                1. 返回值结果不为 Promise 对象，状态都为成功(不返回时为 undefined，也是成功)
+                2. 抛出异常，状态为失败
+                3. 返回值结果为 Promise 对象，状态对应
+            */
+            //1. 返回值结果不为 Promise 对象，状态都为成功
+            // return 'suc'; // Promise: "fulfilled" : "suc"
+            // return null; // Promise {<fulfilled>: null}
+            
+            //2. 抛出异常，状态为失败
+            // throw '发生错误啦'; // Promise {<rejected>: "发生错误啦"}
+            
+            //3. 返回值结果为 Promise 对象，状态对应
+            return new Promise((resolve,rejecte) => {
+                //3.1 状态为成功 == 成功
+                resolve(value); // Promise : "fulfilled" : "巴御前"
+                //3.2 状态为失败 == 失败
+                // rejecte('阿巴阿巴'); //Promise : "rejected" : "阿巴阿巴"
+            })
+        }
+
+        //执行 async 函数
+        let p = get('巴御前');
+        console.log(p);
+        p.then(
+            value => console.log(value),
+            reason => console.warn(reason)
+        )
+    </script>
+</body>
+</html>
