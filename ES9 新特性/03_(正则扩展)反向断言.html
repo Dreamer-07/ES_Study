@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ES9 - 反向断言</title>
+</head>
+<body>
+    <script>
+        let str = '03巴0823御前天下第一!';
+
+        let reg = /\d+/;
+        //正向断言 - 根据目标的 后边的内容(?=) 来确定对象的唯一性        
+        let reg2 = /\d+(?=御前)/;
+        //反向断言 - 根据目标的 前边的内容(?<=) 来确定对象的唯一性      
+        let reg3 = /(?<=巴)\d+/;
+
+        let result = reg.exec(str);
+        let result2 = reg2.exec(str);
+        let result3 = reg3.exec(str);
+
+        console.log(result); // ['03']
+        console.log(result2); // ['0823']
+        console.log(result3); // ['0823']
+    </script>
+</body>
+</html>

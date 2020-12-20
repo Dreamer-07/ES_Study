@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ES9 - 对象展开</title>
+</head>
+<body>
+    <script>
+        /* 
+        1. rest 参数
+            - 使用对象的解构赋值作为方法形参
+            - 多余的对象实参都会作为该 rest 参数的属性
+        */
+        function getObjectValue({username,password,...user}) { 
+            console.log(username);
+            console.log(password);
+            console.log(user); //{type: "laopo", info: "欸嘿嘿嘿"}
+        };
+        getObjectValue({
+            username:'巴御前',
+            password:'123456',
+            type:'laopo',
+            info:'欸嘿嘿嘿'
+        });
+
+        /* 
+        2. ...扩展运算符
+            - 可以展开对象中的所有属性名和对应的属性值
+            - 展开的格式为 属性名:'属性值'
+            - 可以用来合并对象
+        */
+       let o1 = {
+            type:'laopo',
+            info:'欸嘿嘿嘿'
+       };
+       let o2 = {
+            password:'123456',
+       };
+       let o3 = {
+            username:'巴御前',
+       };
+       const obj = {...o1,...o2,...o3};
+       console.log(obj); //{type: "laopo", info: "欸嘿嘿嘿", password: "123456", username: "巴御前"}
+       
+    </script>
+</body>
+</html>

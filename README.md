@@ -1753,7 +1753,7 @@ console.log(Object.entries(o));
 
 ![image-20201219162954591](README.assets/image-20201219162954591.png)
 
-## 4.3 Object.getOwnPropertyDescriptors
+## 4.3 对象扩展方法Object.getOwnPropertyDescriptors
 
 获取对象的**属性描述对象**
 
@@ -1785,3 +1785,301 @@ JavaScript 提供了一个内部数据结构，用来描述对象的属性，控
 6. `set `函数，表示该属性的存值函数（setter），默认为`undefined`。
 
 更多可以参考：https://javascript.ruanyifeng.com/stdlib/attributes.html#toc0
+
+# 第五章 ES9 新特性法
+
+## 5.1 对象展开
+
+> Rest 参数与 spread 扩展运算符在 ES6 中已经引入，但只针对于 ES6
+>
+> 在 ES9 中为**对象**提供了像数组一样的 rest 参数和扩展运算符
+
+**rest 参数**
+
+```javascript
+/* 
+1. rest 参数
+	- 使用对象的解构赋值作为方法形参
+	- 多余的对象实参都会作为该 rest 参数的属性
+*/
+function getObjectValue({username,password,...user}) { 
+    console.log(username);
+    console.log(password);
+    console.log(user); //{type: "laopo", info: "欸嘿嘿嘿"}
+};
+getObjectValue({
+    username:'巴御前',
+    password:'123456',
+    type:'laopo',
+    info:'欸嘿嘿嘿'
+});
+```
+
+**... 扩展运算符**
+
+```javascript
+/* 
+2. ...扩展运算符
+	- 可以展开对象中的所有属性名和对应的属性值
+    - 展开的格式为 属性名:'属性值'
+    - 可以用来合并对象
+*/
+let o1 = {
+    type:'laopo',
+    info:'欸嘿嘿嘿'
+};
+let o2 = {
+    password:'123456',
+};
+let o3 = {
+    username:'巴御前',
+};
+const obj = {...o1,...o2,...o3};
+console.log(obj); //{type: "laopo", info: "欸嘿嘿嘿", password: "123456", username: "巴御前"}
+```
+
+## 5.2 正则扩展
+
+### 命名捕获分组
+
+可以通过指定的变量名获取匹配的结果
+
+```javascript
+// 声明一个字符串
+let str = '<a href="www.baidu.com">百度一下</a>';
+// 获取链接和文本
+
+// 定义正则规则
+let reg = /<a href="(.*)">(.*)<\/a>/; 
+let result = reg.exec(str);
+console.log(result[1]); // www.baidu.com
+console.log(result[2]); // 百度一下
+
+/* 
+使用 ES9 命名捕获分组定义正则规则
+	- 通过 ?<变量名> 设置对应的变量名
+	- 会将匹配的结果放在结果集对象的 groups 属性中，可以通过对应的属性名获取
+*/
+reg  = /<a href="(?<url>.*)">(?<text>.*)<\/a>/;
+let result2 = reg.exec(str);
+console.log(result2); //(3) ["<a href="www.baidu.com">百度一下</a>", "www.baidu.com", "百度一下", index: 0, input: "<a href="www.baidu.com">百度一下</a>", groups: {…}]
+console.log(result2.groups.url); // www.baidu.com
+console.log(result2.groups.text); // 百度一下
+```
+
+### 5.3 反向断言
+
+> 断言：根据目标i的 前/后 边内容来保证目标的唯一性
+
+```javascript
+let str = '03巴0823御前天下第一!';
+
+let reg = /\d+/;
+//正向断言 - 根据目标的 后边的内容(?=) 来确定对象的唯一性        
+let reg2 = /\d+(?=御前)/;
+//反向断言 - 根据目标的 前边的内容(?<=) 来确定对象的唯一性      
+let reg3 = /(?<=巴)\d+/;
+
+let result = reg.exec(str);
+let result2 = reg2.exec(str);
+let result3 = reg3.exec(str);
+
+console.log(result); // ['03']
+console.log(result2); // ['0823']
+console.log(result3); // ['0823']
+```
+
+### dotAll 模式
+
+# 第六章 ES10 新特性
+
+## 6.1 对象扩展方法 Object.fromEntries
+
+将 二维数组/Map 转换为对应的对象
+
+```javascript
+//可以将二维数组 / Map 转换成对象
+//1. 二维数组
+const result = Object.fromEntries([
+    ['name','巴御前赛高'],
+    ['zhijie','Archer']
+]);
+console.log(result); //{name: "巴御前赛高", zhijie: "Archer"}
+
+//2. Map
+let m = new Map;
+m.set('name','巴御前赛高');
+m.set('zhijie','Archer');
+let result2 = Object.fromEntries(m);
+console.log(result2); //{name: "巴御前赛高", zhijie: "Archer"}
+```
+
+二维数组的格式和 **Object.entries(对象)** 得到的结果一样 
+
+## 6.2 字符串扩展方法 trimStart 与 trimEnd
+
+trimStart：清除字符串左侧的空格
+
+trimEnd：清除字符串右侧的空格
+
+```javascript
+//清除字符串 左侧(start)/右侧(end) 的空格
+let str = '  bayuqian!! ';
+console.log(str.trim());
+console.log(str.trimStart());
+console.log(str.trimEnd());
+```
+
+## 6.3 数值扩展方法 Array.prototype.flat 与 flatMap
+
+flat 将多维数组转换为低维数组 - **可以传入一个参数，该参数为'拉平'的深度**
+
+map 可以遍历数组中的每个元素进行**'映射'**
+
+flatMap 将 map 和 flat 结合起来，可以将因 map 映射成为数组的元素再次拉平(只拉平一层)
+
+```javascript
+//flat 将多维数组转换为低维数组
+let arr = [1,2,3,4,5,[6,7]];
+let result = arr.flat();
+//flat 可以传入一个参数，该参数为'拉平'的深度
+console.log();
+let arr2 = [1,[2,3,[4,5,6]]];
+console.log(arr2.flat()); // 默认为一层 (4) [1, 2, 3, Array(3)]
+console.log(arr2.flat(2)); // 设置为两层 (6) [1, 2, 3, 4, 5, 6]
+console.log(result); //(7) [1, 2, 3, 4, 5, 6, 7]
+
+//map 可以遍历数组中的每个元素进行'映射'
+console.log(result.map(item => item * 10)); //(7) [10, 20, 30, 40, 50, 60, 70]
+
+//flatMap 将 map 和 flat 结合起来，可以将因 map 映射成为数组的元素再次拉平(只拉平一层)
+console.log(result.map(item => [item * 10])); //(7) [Array(1), Array(1), Array(1), Array(1), Array(1), Array(1), Array(1)]
+console.log(result.flatMap(item => [item * 2 * 2])); //(7) [4, 8, 12, 16, 20, 24, 28]
+```
+
+## 6.4 Symbol.protoype.description
+
+description 获取对应 Symbol 对象的**描述字符串**
+
+```javascript
+//获取 Symbol 实例对象的字符串
+let s = Symbol('巴御前天下第一');
+console.log(s.description); //巴御前天下第一
+```
+
+# 第七章 ES11 新特性
+
+## 7.1 私有属性
+
+```javascript
+//声明类属性时在前面加上 # 表示该属性为私有属性
+class Person{
+    info;
+    #name;
+    #age;
+
+    constructor(info,name,age){
+        this.info = info;
+        this.#name = name;
+        this.#age = age;
+    };
+
+	toString(){
+    	//在类内部可以通过 this 访问
+    	console.log(this.info);
+    	console.log(this.#name);
+   		console.log(this.#age);
+    };
+};
+
+//实例化对象
+let p = new Person('欸嘿嘿','巴御前','Archer');
+console.log(p.info); //欸嘿嘿
+
+// console.log(p.#name); //Uncaught SyntaxError: Private field '#name' must be declared in an enclosing class
+console.log(p); //Person {info: "欸嘿嘿", #name: "巴御前", #age: "Archer"}
+p.toString(); //成功执行
+```
+
+## 7.2 Promise.allSettled
+
+接收一个 Promise 对象数组，返回一个 Promise 对象，但返回的 Promise 对象永远都是成功的状态
+
+返回的 Promise 对象成功的值时穿入 Promise 数组的每一个 Promise 对象的值和状态
+
+```javascript
+//声明两个 Promise 对象
+let p1 = new Promise((resolve,reject) => resolve('巴御前天下第一！'));
+let p2 = new Promise((resolve,reject) => reject('出错啦'));
+
+//调用 allSettled()
+let result = Promise.allSettled([p1,p2]);
+console.log(result);
+```
+
+![image-20201220200654573](README.assets/image-20201220200654573.png)
+
+**拓展：**Promise.all() 
+
+也是传入一个 Promise 对象数组，但只有所有元素的状态都是成功才会返回成功状态
+
+```javascript
+//调用 all()
+let result2 = Promise.all([p1,p2]);
+console.log(result2);
+```
+
+ 失败状态：
+
+![image-20201220201104696](README.assets/image-20201220201104696.png)
+
+成功状态
+
+![image-20201220201158024](README.assets/image-20201220201158024.png)
+
+## 7.3 String.prototype.matchAll
+
+正则有关
+
+## 7.4 可选链操作符
+
+**对象?.** 读取对象时可以使用，不用做过多的判断，防止传入的参数为空
+
+```javascript
+//读取对象属性时用
+function readObjectValie(obj) {
+    //原写法 - 需要判断是否传入对象
+    // const host = obj && obj.db && obj.db.host //127.0.0.1
+    //使用 可选链操作符 ?. 进行操作
+    const host = obj?.db?.host;
+    console.log(host);
+}
+readObjectValie({
+    db:{
+        host:'127.0.0.1'
+    }
+});
+```
+
+## 7.5 动态 import
+
+调用 **import('模块路径')** 只在需要的时候在导入对应的模块
+
+返回值是一个 Promise 对象，该 Promise 对象成功的值就是导入模块文件中暴露的接口的对象集合
+
+```javascript
+//静态导入
+// import * as m1 from './m1.js' 
+
+let btn = document.querySelector('#btn');
+btn.onclick = function(){
+    //import('模块路径') 只在需要的时候在导入对应的模块
+    import("./m1.js").then(module => { //返回值是一个 Promise 对象
+        //该 Promise 对象成功的值就是导入模块文件中暴露的接口的对象集合
+        console.log(module);
+        module.seyHello();
+    })
+}
+```
+
+![image-20201220203057442](README.assets/image-20201220203057442.png)

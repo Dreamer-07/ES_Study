@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ES10 - fromEntries</title>
+</head>
+<body>
+    <script>
+        //可以将二维数组 / Map 转换成对象
+        //1. 二维数组
+        const result = Object.fromEntries([
+            ['name','巴御前赛高'],
+            ['zhijie','Archer']
+        ]);
+        console.log(result); //{name: "巴御前赛高", zhijie: "Archer"}
+
+        //2. Map
+        let m = new Map;
+        m.set('name','巴御前赛高');
+        m.set('zhijie','Archer');
+        let result2 = Object.fromEntries(m);
+        console.log(result2); //{name: "巴御前赛高", zhijie: "Archer"}
+    </script>
+</body>
+</html>

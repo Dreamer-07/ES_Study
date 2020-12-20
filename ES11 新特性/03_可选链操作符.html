@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ES11 - 可选链操作符</title>
+</head>
+<body>
+    <script>
+        //读取对象属性时用
+        function readObjectValie(obj) {
+            //原写法 - 需要判断是否传入对象
+            // const host = obj && obj.db && obj.db.host //127.0.0.1
+            //使用 可选链操作符 ?. 进行操作
+            const host = obj?.db?.host;
+            console.log(host);
+        }
+        readObjectValie({
+            db:{
+                host:'127.0.0.1'
+            }
+        });
+    </script>
+</body>
+</html>

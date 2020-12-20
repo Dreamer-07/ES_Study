@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ES9 - 命名捕获分组</title>
+</head>
+<body>
+    <script>
+        // 声明一个字符串
+        let str = '<a href="www.baidu.com">百度一下</a>';
+        // 获取链接和文本
+
+        // 定义正则规则
+        let reg = /<a href="(.*)">(.*)<\/a>/; 
+        let result = reg.exec(str);
+        console.log(result[1]); // www.baidu.com
+        console.log(result[2]); // 百度一下
+        
+        /* 
+        使用 ES9 命名捕获分组定义正则规则
+            - 通过 ?<变量名> 设置对应的变量名
+            - 会将匹配的结果放在结果集对象的 groups 属性中，可以通过对应的属性名获取
+        */
+        reg  = /<a href="(?<url>.*)">(?<text>.*)<\/a>/;
+        let result2 = reg.exec(str);
+        console.log(result2); //(3) ["<a href="www.baidu.com">百度一下</a>", "www.baidu.com", "百度一下", index: 0, input: "<a href="www.baidu.com">百度一下</a>", groups: {…}]
+        console.log(result2.groups.url); // www.baidu.com
+        console.log(result2.groups.text); // 百度一下
+    </script>
+</body>
+</html>

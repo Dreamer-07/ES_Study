@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ES11 - 私有属性</title>
+</head>
+<body>
+    <script>
+        //声明类属性时在前面加上 # 表示该属性为私有属性
+        class Person{
+            info;
+            #name;
+            #age;
+
+            constructor(info,name,age){
+                this.info = info;
+                this.#name = name;
+                this.#age = age;
+            };
+
+            toString(){
+                //在类内部可以通过 this 访问
+                console.log(this.info);
+                console.log(this.#name);
+                console.log(this.#age);
+            };
+        };
+        
+        //实例化对象
+        let p = new Person('欸嘿嘿','巴御前','Archer');
+        console.log(p.info); //欸嘿嘿
+
+        // console.log(p.#name); //Uncaught SyntaxError: Private field '#name' must be declared in an enclosing class
+        console.log(p); //Person {info: "欸嘿嘿", #name: "巴御前", #age: "Archer"}
+        p.toString(); //成功执行
+    </script>
+</body>
+</html>
