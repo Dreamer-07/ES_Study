@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ES8 - 对象扩展方法</title>
+</head>
+<body>
+    <script>
+        //定义对象
+        let o = {
+            name:'巴御前',
+            info:'节制！节制',
+        };
+
+        //1. Object.keys(对象) 可以获取所有的键名
+        console.log(Object.keys(o));
+        //2. Object.values(对象) 可以获取所有的 value 值
+        console.log(Object.values(o));
+        //3. Object.entries(对象) 获取由 属性名和属性值 构成的二维数组
+        console.log(Object.entries(o));
+
+        //4. Object.getOwnPropertyDescriptors(对象) 获取对象的描述对象
+        console.log(Object.getOwnPropertyDescriptors(o));
+    </script>
+</body>
+</html>

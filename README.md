@@ -1681,3 +1681,107 @@ main();
 ```
 
 使用：**node JS文件** 命令执行
+
+### 使用 await 和 async 发送 Ajax 请求
+
+```javascript
+//定义发送 Ajax 请求的函数
+function sendAjax(url){
+    //将异步任务封装在 Promise 对象中
+    return new Promise((resolve,reject) => {
+        //1. 创建对象
+        let xhp = new XMLHttpRequest();
+        //2. 初始化
+        xhp.open('GET',url);
+        //3. 发送
+        xhp.send();
+
+        //4. 事件绑定
+        xhp.onreadystatechange = function(){
+            if(xhp.readyState === 4){
+                if(xhp.status >= 200 && xhp.status <= 299){
+                    //4.1 请求成功，封装响应体
+                    resolve(xhp.response);
+                }else{
+                    //4.2 请求失败，封装状态码
+                    reject(xhp.status);
+                }
+            }
+        }
+    });
+}
+
+//发送 Ajax 请求得到响应结果 - Promise 对象
+
+//可以使用 promise 对象的 then() 方法进行处理
+let result = sendAjax('http://localhost:8080/04_Output/handle02');
+result.then(
+    value => console.log(value + '\n----------'),
+    reason => console.warn(reason)
+);
+//也可以使用 async 和 await 进行处理
+async function main(){
+    let resp = await sendAjax('http://localhost:8080/04_Output/handle02');
+    console.log('请求成功：' + resp);
+}
+
+main();
+```
+
+## 4.2 对象方法的扩展
+
+Object.keys(对象) 可以获取所有的键名
+
+Object.values(对象) 可以获取所有的 value 值
+
+Object.entries(对象) 获取由 属性名和属性值 构成的二维数组
+
+```javascript
+//定义对象
+let o = {
+    name:'巴御前',
+    info:'节制！节制',
+};
+
+//1. Object.keys(对象) 可以获取所有的键名
+console.log(Object.keys(o));
+//2. Object.values(对象) 可以获取所有的 value 值
+console.log(Object.values(o));
+//3. Object.entries(对象) 获取由 属性名和属性值 构成的二维数组
+console.log(Object.entries(o));
+```
+
+![image-20201219162954591](README.assets/image-20201219162954591.png)
+
+## 4.3 Object.getOwnPropertyDescriptors
+
+获取对象的**属性描述对象**
+
+```javascript
+let o = {
+    name:'巴御前',
+    info:'节制！节制',
+};
+
+//4. Object.getOwnPropertyDescriptors(对象) 获取对象的描述对象
+console.log(Object.getOwnPropertyDescriptors(o));
+```
+
+![image-20201219163856326](README.assets/image-20201219163856326.png)
+
+属性描述对象：
+
+JavaScript 提供了一个内部数据结构，用来描述对象的属性，控制它的行为，比如该属性是否可写、可遍历等等。这个内部数据结构称为“属性描述对象”（attributes object）。每个属性都有自己对应的属性描述对象，保存该属性的一些元信息。
+
+**拓展**：可以使用 `Object.create()` 创建对象，第一个参数指定为**原型对象**，第二个参数指定为**属性描述对象**
+
+属性描述对象提供6个元属性。
+
+1. `value` 该属性的属性值，默认为`undefined`。
+2. `writable` 布尔值，表示属性值（value）是否可改变（即是否可写），默认为`true`。
+3. `enumerable` 布尔值，表示该属性是否可遍历，默认为`true`。如果设为`false`，会使得某些操作（比如`for...in`循环、`Object.keys()`）跳过该属性。
+4. `configurable`  布尔值，表示可配置性，默认为`true`。如果设为`false`，将阻止某些操作改写该属性，比如无法删除该属性，也不得改变该属性的属性描述对象（`value`属性除外）。也就是说，`configurable`属性控制了属性描述对象的可写性。
+5. `get `函数，表示该属性的取值函数（getter），默认为`undefined`。
+6. `set `函数，表示该属性的存值函数（setter），默认为`undefined`。
+
+更多可以参考：https://javascript.ruanyifeng.com/stdlib/attributes.html#toc0

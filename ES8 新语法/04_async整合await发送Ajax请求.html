@@ -6,7 +6,48 @@
     <title>ES8 - async整合await发送Ajax请求</title>
 </head>
 <body>
-    <script src="https://cdn.staticfile.org/jquery/3.5.1/jquery.min.js"></script>
-    <script></script>
+    <script> 
+        //定义发送 Ajax 请求的函数
+        function sendAjax(url){
+            //将异步任务封装在 Promise 对象中
+            return new Promise((resolve,reject) => {
+                //1. 创建对象
+                let xhp = new XMLHttpRequest();
+                //2. 初始化
+                xhp.open('GET',url);
+                //3. 发送
+                xhp.send();
+
+                //4. 事件绑定
+                xhp.onreadystatechange = function(){
+                    if(xhp.readyState === 4){
+                        if(xhp.status >= 200 && xhp.status <= 299){
+                            //4.1 请求成功，封装响应体
+                            resolve(xhp.response);
+                        }else{
+                            //4.2 请求失败，封装状态码
+                            reject(xhp.status);
+                        }
+                    }
+                }
+            });
+        }
+
+        //发送 Ajax 请求得到响应结果 - Promise 对象
+        
+        //可以使用 promise 对象的 then() 方法进行处理
+        let result = sendAjax('http://localhost:8080/04_Output/handle02');
+        result.then(
+            value => console.log(value + '\n----------'),
+            reason => console.warn(reason)
+        );
+        //也可以使用 async 和 await 进行处理
+        async function main(){
+            let resp = await sendAjax('http://localhost:8080/04_Output/handle02');
+            console.log('请求成功：' + resp);
+        }
+
+        main();
+    </script>
 </body>
 </html>
