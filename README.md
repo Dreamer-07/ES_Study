@@ -2083,3 +2083,26 @@ btn.onclick = function(){
 ```
 
 ![image-20201220203057442](README.assets/image-20201220203057442.png)
+
+## 7.6 BigInt类型
+
+大整数，用来做更大数值之间的运算
+
+```javascript
+//变量声明 - 在后面加上一个 n
+let a = 123n;
+console.log(a,typeof a); //123n "bigint"
+
+//使用 BigInt() 函数获取对应的 BigInt 类型变量
+console.log(BigInt(521)); //521n
+// console.log(BigInt(1.24)); //Uncaught RangeError: The number 1.24 cannot be converted to a BigInt because it is not an integer
+
+//进行更大数值之间的运算
+let max = Number.MAX_SAFE_INTEGER; //获取最大的安全值
+console.log(max,max + 1,max + 2); //9007199254740991 9007199254740992 9007199254740992 - 在最大安全值 + 2 后数据并不发生变化
+console.log(BigInt(max) + BigInt(3)); //9007199254740994n - BigInt 不能直接与其他类型进行运算
+```
+
+## 7.7 globalThis
+
+无论在什么环境(游览器，NodeJs ....)下都指向全局对象
